@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     @almirantado_ext_data = get_drifter(@almirantado_ext)
     @almirantado_int = System.where("name ='almirantado_int' ") [0]
     @almirantado_ext = System.where("name ='almirantado_ext' ") [0]
-    @inpe = System.where("name ='inpe' ") [0]
+    @inpe = System.where("name ='inpe' ")[0]
     @systems = [@almirantado_int, @almirantado_ext, @inpe]
 
   end  
