@@ -1,10 +1,8 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="navbar-brand">
     <%= link_to image_tag("logo_pnboia.png", class: "nav-img p-0"), "https://www.marinha.mil.br/chm/dados-do-goos-brasil/pnboia-mapa", target: :_blank %>
-    <%= link_to image_tag("logo_remo.png", class: "nav-img p-0"), "https://www.rederemo.org/", target: :_blank %>
+    <%= link_to image_tag("logo_remo.png", class: "nav-img p-0"), "http://www.fis.ufba.br/rede-de-modelagem-e-observacao-oceanografica-remo", target: :_blank %>
     <%= link_to image_tag("logo_inpe.png", class: "nav-img p-0"), "https://loa-inpe.github.io/", target: :_blank %>
-    <%= link_to image_tag("logo_criosfera.png", class: "nav-img p-0"), "https://www.ufrgs.br/inctcriosfera/inpe.html", target: :_blank %>
-
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -13,18 +11,26 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#projetos">PROJETOS</a>
+          <a class="nav-link" href="#projetos">PROJECTS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#tempo-real">DADOS EM TEMPO REAL</a>
+          <a class="nav-link" href="#tempo-real">REAL TIME DATA</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#graficos">GRÁFICOS</a>
+          <a class="nav-link" href="#graficos">GRAPHS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/operantarxl">OPERANTAR XL</a>
+          <a class="nav-link" href="/english">OPERANTAR XLI</a>
         </li>
       </ul>
+    </div>
+    <div class="dropdown ml-3">
+      <div class="dropbtn"><%= image_tag "us_flag.png", class: "flag p-0 pr-1"%>EN</div>
+      <div class="dropdown-content">
+        <%= link_to operantarxl_path, class: 'd-flex' do %>
+          <%=image_tag("brazil_flag.png", class: "flag p-0 pr-1", title: 'Versão em Português') %>PT
+        <% end %>          
+      </div>
     </div>
   </div>
 </div>

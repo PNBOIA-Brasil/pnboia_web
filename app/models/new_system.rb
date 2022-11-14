@@ -1,0 +1,2 @@
+class NewSystem < ApplicationRecord
+end

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home, :position, :english]
+  skip_before_action :authenticate_user!, only: [:home, :position, :english, :operantarxl, :operantarxl_en]
 
   def admin
     if current_user.admin
@@ -20,6 +20,86 @@ class PagesController < ApplicationController
   end  
 
   def home
+    if params[:commit]
+      @popup = false
+      start_date = params[:start_date]
+      end_date = params[:end_date]
+      start_date = Date.parse start_date
+      end_date = Date.parse end_date
+    else
+      @popup = true
+      start_date = (Time.now - 1.day)
+      end_date = (Time.now + 1.day)
+    end
+    if start_date == nil
+      start_date = (Time.now - 5.day)
+    end
+    if end_date == nil
+      end_date = Time.now + 1.day
+    end
+    if start_date < (Time.now - 5.day)
+      start_date = (Time.now - 5.day)
+    end
+    if end_date < start_date
+      end_date = Time.now + 1.day
+    end
+
+    @start_date = start_date
+    @end_date = end_date
+
+    @almirantado_int = NewSystem.where("name ='almirantado_int' ") [0]
+    @almirantado_ext = NewSystem.where("name ='almirantado_ext' ") [0]
+    @inpe = NewSystem.where("name ='inpe' ") [0]
+
+    @almirantado_int_data = get_remobs_new(@almirantado_int, start_date, end_date)
+    @almirantado_ext_data = get_remobs_new(@almirantado_ext, start_date, end_date)
+    @inpe_data = get_remobs_new(@inpe, start_date, end_date)
+
+    start_date = (Time.now - 5.day)
+    end_date = Time.now + 1.day
+    @drifters = get_remobs_sofar(start_date, end_date)
+
+    @systems = [@almirantado_int, @almirantado_ext, @inpe]
+  end
+
+  def english
+    if params[:commit]
+      @popup = false
+      start_date = params[:start_date]
+      end_date = params[:end_date]
+      start_date = Date.parse start_date
+      end_date = Date.parse end_date
+    else
+      @popup = true
+      start_date = (Time.now - 1.day)
+      end_date = (Time.now + 1.day)
+    end
+    if start_date == nil
+      start_date = (Time.now - 5.day)
+    end
+    if end_date == nil
+      end_date = Time.now + 1.day
+    end
+    if start_date < (Time.now - 5.day)
+      start_date = (Time.now - 5.day)
+    end
+    if end_date < start_date
+      end_date = Time.now + 1.day
+    end
+
+    @almirantado_int = NewSystem.where("name ='almirantado_int' ") [0]
+    @almirantado_ext = NewSystem.where("name ='almirantado_ext' ") [0]
+    @inpe = NewSystem.where("name ='inpe' ") [0]
+
+    @almirantado_int_data = get_remobs_new(@almirantado_int, start_date, end_date)
+    @almirantado_ext_data = get_remobs_new(@almirantado_ext, start_date, end_date)
+    @inpe_data = get_remobs_new(@inpe, start_date, end_date)
+
+    @systems = [@almirantado_int, @almirantado_ext, @inpe]
+  end
+
+
+  def operantarxl
     if params[:commit]
       @popup = false
       start_date = params[:start_date]
@@ -64,8 +144,7 @@ class PagesController < ApplicationController
     @systems = [@almirantado_int, @almirantado_ext, @inpe]
   end
 
-
-  def english
+  def operantarxl_en
     if params[:commit]
       start_date = params[:start_date]
       end_date = params[:end_date]
@@ -95,9 +174,10 @@ class PagesController < ApplicationController
     @almirantado_int_data = get_remobs(@almirantado_int, start_date, end_date)
     @almirantado_ext_data = get_remobs(@almirantado_ext, start_date, end_date)
     @inpe_data = get_remobs(@inpe, start_date, end_date)
-
+    
     @systems = [@almirantado_int, @almirantado_ext, @inpe]
   end
+
 
 
 
@@ -116,6 +196,183 @@ class PagesController < ApplicationController
     end
     return params
   end
+
+
+  def get_remobs_sofar(start_date, end_date)
+    begin
+      response = RestClient.get("http://remobsapi.herokuapp.com/api/v2/drift_values/last?start_date=#{start_date.strftime("%Y-%m-%d")}&end_date=#{end_date.strftime("%Y-%m-%d")}&token=#{ENV["REMOBS_TOKEN"]}")
+
+      remobs_response = JSON.parse(response)
+
+      params_total = []
+      params = {}
+
+      remobs_response.each do |item|
+        params = {}
+        if item['latitude']
+          params[:date_time] = Time.parse(item['date_time'])
+          params[:buoy_id] = item['buoy_id']
+          params[:swvht] = item['swvht1'].to_f
+          params[:tp] = item['tp1'].to_f
+          params[:wvspread] = item['wvspread1'].to_f
+          params[:wdir] = item['wdir1'].to_i
+          params[:sst] = item['sst'].to_f
+          params[:wspd] = item['wspd1'].to_f
+          params[:wvdir] = item['wvdir1'].to_f
+          params[:lat] = item['latitude'].to_f
+          params[:lon] = item['longitude'].to_f
+          params_total << params
+        end
+      end
+      return params_total
+    rescue
+      return []
+    end
+  end
+
+
+  def get_remobs_new(buoy, start_date, end_date)
+    if buoy.buoy_id
+      begin
+        response = RestClient.get("http://remobsapi.herokuapp.com/api/v2/qualified_values?buoy=#{buoy.buoy_id.to_i}&start_date=#{start_date.strftime("%Y-%m-%d")}&end_date=#{end_date.strftime("%Y-%m-%d")}&token=#{ENV["REMOBS_TOKEN"]}")
+
+        remobs_response = JSON.parse(response)
+
+        params = {}
+        params[:swvht] = []
+        params[:mxwvht] = []
+        params[:tp] = []
+        params[:sst] = []
+        params[:wvspread] = []
+        params[:wvdir] = []
+        params[:date_time] = []
+        params[:buoy_id] = []
+        params[:wspd] = []
+        params[:wdir] = []
+        params[:gust] = []
+        params[:wvdirg] = []
+        params[:wdirg] = []
+        params[:pres] = []
+        params[:rh] = []
+        params[:sss] = []
+        params[:atmp] = []
+        params[:srad] = []
+
+
+        remobs_response.each do |item|
+          params[:buoy_id] << item['buoy_id']
+
+          if item['flag_swvht1'].to_i > 0 || item['flag_swvht1'] == nil
+            params[:swvht] << nil
+          else
+            params[:swvht] << item['swvht1'].to_f
+          end
+
+          if item['flag_mxwvht1'].to_i > 0 || item['flag_mxwvht1'] == nil
+            params[:mxwvht] << nil
+          else
+            params[:mxwvht] << item['mxwvht1'].to_f
+          end
+
+          if item['flag_tp1'].to_i > 0 || item['flag_tp1'] == nil
+            params[:tp] << nil
+          else
+            params[:tp] << item['tp1'].to_f
+          end
+
+          if item['flag_sst'].to_i > 0 || item['flag_sst'] == nil
+            params[:sst] << nil
+          else
+            params[:sst] << item['sst'].to_f
+          end
+
+          if item['flag_wvspread1'].to_i > 0 || item['flag_wvspread1'] == nil
+            params[:wvspread] << nil
+          else
+            params[:wvspread] << item['wvspread1'].to_f
+          end
+
+          params[:date_time] << Time.parse(item['date_time'])
+
+          if item['flag_wdir1'].to_i > 0 || item['flag_wdir1'] == nil
+            params[:wdir] << nil
+          else
+            params[:wdir] << item['wdir1'].to_i
+          end
+
+          if item['flag_wdir1'].to_i > 0 || item['flag_wdir1'] == nil
+            params[:wdirg] << nil
+          else
+            params[:wdirg] << (item['wdir1'].to_i/10)*10
+          end
+
+          if item['flag_gust1'].to_i > 0 || item['flag_gust1'] == nil
+            params[:gust] << nil
+          else
+            params[:gust] << item['gust1'].to_f
+          end
+
+          if item['flag_wspd1'].to_i > 0 || item['flag_wspd1'] == nil
+            params[:wspd] << nil
+            puts("no #{buoy.buoy_id}")
+
+          else
+            params[:wspd] << item['wspd1'].to_f
+            puts("#{buoy.buoy_id}")
+          end
+
+          if item['flag_wvdir1'].to_i > 0 || item['flag_wvdir1'] == nil
+            params[:wvdir] << nil
+          else
+            params[:wvdir] << item['wvdir1'].to_f
+          end
+
+          if item['flag_wvdir1'].to_i > 0 || item['flag_wvdir1'] == nil
+            params[:wvdirg] << nil
+          else
+            params[:wvdirg] << (item['wvdir1'].to_i/10)*10
+          end
+
+          if item['flag_pres'].to_i > 0 || item['flag_pres'] == nil
+            params[:pres] << nil
+          else
+            params[:pres] << item['pres'].to_f
+          end
+
+          if item['flag_rh'].to_i > 0 || item['flag_rh'] == nil
+            params[:rh] << nil
+          else
+            params[:rh] << item['rh'].to_f
+          end
+
+          if item['flag_sss'].to_i > 0 || item['flag_sss'] == nil
+            params[:sss] << nil
+          else
+            params[:sss] << item['sss'].to_f
+          end
+
+          if item['flag_atmp'].to_i > 0 || item['flag_atmp'] == nil
+            params[:atmp] << nil
+          else
+            params[:atmp] << item['atmp'].to_f
+          end
+
+          if item['flag_srad'].to_i > 0 || item['flag_srad'] == nil
+            params[:srad] << nil
+          else
+            params[:srad] << item['srad'].to_f
+          end
+
+        end
+        return params
+      rescue
+        return {}
+      end
+    else
+      return {}
+    end
+  end
+
 
   def get_remobs(buoy, start_date, end_date)
     if buoy.buoy_id

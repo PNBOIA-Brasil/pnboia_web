@@ -10,16 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_10_224940) do
+ActiveRecord::Schema.define(version: 2022_11_14_144626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "new_systems", force: :cascade do |t|
+    t.string "name"
+    t.string "buoy_id"
+    t.float "lat"
+    t.float "lon"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "systems", force: :cascade do |t|
     t.string "name"
     t.string "buoy_id"
     t.float "lat"
     t.float "lon"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tides", force: :cascade do |t|
+    t.datetime "date_time"
+    t.float "elev"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

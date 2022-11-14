@@ -7,21 +7,30 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <%= link_to image_tag("brazil_flag.png", class: "flag p-0", title: 'Versão em Português'),  root_path%>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#projetos">PROJECTS</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#tempo-real">REAL TIME DATA</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#graficos">GRAPHS</a>
-      </li>
-    </ul>
+  <div class='d-flex'>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#projetos">PROJECTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#tempo-real">REAL TIME DATA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#graficos">GRAPHS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/english">OPERANTAR XL</a>
+        </li>
+      </ul>
+    </div>
+    <div class="dropdown ml-3">
+      <div class="dropbtn"><%= image_tag "us_flag.png", class: "flag p-0 pr-1"%>EN</div>
+      <div class="dropdown-content">
+        <%= link_to root_path, class: 'd-flex' do %>
+          <%=image_tag("brazil_flag.png", class: "flag p-0 pr-1", title: 'Versão em Português') %>PT
+        <% end %>          
+      </div>
+    </div>
   </div>
 </div>

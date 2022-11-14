@@ -24,9 +24,10 @@ require("channels")
 
 // External imports
 import "bootstrap";
-import { initMapbox, initMapboxDrifter } from '../plugins/init_mapbox';
-import { initPlotly } from '../plugins/init_plotly';
+import { initMapbox, initMapboxNew, initMapboxDrifter, initMapboxSofar } from '../plugins/init_mapbox';
+import { initPlotly, initPlotlyNew } from '../plugins/init_plotly';
 import { initPopup } from '../plugins/init_popup';
+// import { initTab } from '../plugins/init_tab';
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
@@ -38,9 +39,13 @@ import { initQuotes } from '../components/quotes';
 document.addEventListener('turbolinks:load', () => {
   initPopup();
   initMapbox();
+  initMapboxNew();
   initMapboxDrifter();
+  initMapboxSofar();
   initPlotly();
+  initPlotlyNew();
   initSmooth();
   initUpdateNavbarOnScroll();
-  initQuotes();  
+  initQuotes();
+  // initTab();
 })

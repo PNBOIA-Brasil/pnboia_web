@@ -1,6 +1,5 @@
 // navigation bar styling
 .navbar {
-  overflow: hidden;
   background-color:rgba(0, 0, 0, 0.0);
   -webkit-transition: background-color 2s ease-in;
    -moz-transition: background-color 2s ease-in;
@@ -72,6 +71,36 @@
 .login-button{
   text-decoration: none !important;
 }
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {}
+
+.dropbtn {
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  padding-top: 5px;
+  display: none;
+  position: absolute;
+  z-index: -10000;
+}
+
+.dropdown-content a {
+  text-decoration: none;
+  display: block;
+  color: white !important;
+  &:hover{
+    color: white !important;
+    text-decoration: none  !important;
+  }
+}
+
 
 @media (min-width: 320px) { 
   .navbar {

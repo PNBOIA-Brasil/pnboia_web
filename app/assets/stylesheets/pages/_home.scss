@@ -9,7 +9,9 @@ body {
   font-size: 17px;
   width: max-content;
 }
-
+.observation1 {
+  font-size: 1.4 rem;
+}
 .gap {
   margin-top: 40px;
 }
@@ -68,7 +70,27 @@ body {
   }
 }
 
+.active-button{
+  background-color: #FEDC37 !important;
+  opacity: 0.9 !important;
+}
+.orange-button1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  height: 60px;
+  width: 140px;
+  font-weight: bold;
+  background-color: #3FAEFD;
+  border-radius: 5px;
+  float:right;
+  -webkit-transition: background-color 0.75s, color 0.75s;
+  transition: background-color 0.75s, color 0.75s;
+}
+
 .orange-button {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,11 +104,13 @@ body {
   -webkit-transition: background-color 0.75s, color 0.75s;
   transition: background-color 0.75s, color 0.75s;
   &:hover {
-    background-color: #FEDC37;
+    background-color: #FEDC37 !important;
+    opacity: 1.0 !important;
   }
 }
 
 .orange-button-search {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,7 +220,7 @@ body {
     }
   }
   .observation {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
   }
 
 }
