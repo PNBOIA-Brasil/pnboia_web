@@ -3,7 +3,8 @@ import spotterIconYellow from '../images/spotter_icon_yellow.png';
 import spotterIconGreen from '../images/spotter_icon_green.png';
 import spotterIconBlue from '../images/spotter_icon_blue.png';
 import criosIcon from '../images/crios_buoy.png';
-
+import tideIcon from '../images/maregrafo.png';
+import weatherIcon from '../images/weather.png';
 
 
 const initMapboxSofar = () => {
@@ -77,6 +78,7 @@ const initMapboxNew = () => {
 		const inpeCard = document.getElementById('inpe');
 		const almirantadoIntCard = document.getElementById('almirantado_int');
 		const almirantadoExtCard = document.getElementById('almirantado_ext');
+
 
 		markers.forEach((marker) => {
 			if (marker.name === 'almirantado_int') {
@@ -187,6 +189,43 @@ const initMapboxNew = () => {
 			}
 		});
 
+		var tideStation = document.createElement('div');
+		tideStation.className = 'marker';
+		tideStation.style.backgroundImage = `url('${tideIcon}')`;
+		tideStation.style.backgroundSize = 'contain';
+		tideStation.style.width = '21px';
+		tideStation.style.height = '31px';
+		let markerTideStation
+		markerTideStation = new mapboxgl.Marker(tideStation)
+		.setLngLat([ -58.393, -62.085 ])
+			.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
+				<p class='m-0 p-0'><strong>ESTAÇÃO MAREGRÁFICA</strong></p>
+				<p class='m-0 p-0'><strong>CHM: Comandante Ferraz</strong></p>
+				<p class='m-0 p-0'><strong>LAT:</strong> -62.09, <strong>LON:</strong> -58.39</p>
+				<a class="btn m-0 p-0 collor-yellow" href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/56-eacf_0.pdf" target="_blank">
+					<i class="fas fa-chart-pie"></i>
+				</a></div>`))
+		.addTo(map);
+
+
+		var weatherStation = document.createElement('div');
+		weatherStation.className = 'marker';
+		weatherStation.style.backgroundImage = `url('${weatherIcon}')`;
+		weatherStation.style.backgroundSize = 'contain';
+		weatherStation.style.width = '30px';
+		weatherStation.style.height = '30px';
+		let markerWeatherStations
+		markerWeatherStations = new mapboxgl.Marker(weatherStation)
+		.setLngLat([ -58.3852780555556, -62.0836111111111 ])
+			.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
+				<p class='m-0 p-0'><strong>ESTAÇÃO METEOROLÓGICA</strong></p>
+				<p class='m-0 p-0'><strong>INMET: Comandante Ferraz</strong></p>
+				<p class='m-0 p-0'><strong>LAT:</strong> -62.0836, <strong>LON:</strong> -58.3852</p>
+				<a class="btn m-0 p-0 collor-yellow" href="http://www.oceano.live/graphs/1218?language=pt-br" target="_blank">
+					<i class="fas fa-chart-pie"></i>
+				</a></div>`))
+		.addTo(map);
+		
 		fitMapToMarkers(map, markers);
 	}
 };

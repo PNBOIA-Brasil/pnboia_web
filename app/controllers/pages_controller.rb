@@ -314,11 +314,8 @@ class PagesController < ApplicationController
 
           if item['flag_wspd1'].to_i > 0 || item['flag_wspd1'] == nil
             params[:wspd] << nil
-            puts("no #{buoy.buoy_id}")
-
           else
             params[:wspd] << item['wspd1'].to_f
-            puts("#{buoy.buoy_id}")
           end
 
           if item['flag_wvdir1'].to_i > 0 || item['flag_wvdir1'] == nil
