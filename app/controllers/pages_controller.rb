@@ -210,18 +210,19 @@ class PagesController < ApplicationController
       remobs_response.each do |item|
         params = {}
         if item['latitude']
-          params[:date_time] = Time.parse(item['date_time'])
-          params[:buoy_id] = item['buoy_id']
-          params[:swvht] = item['swvht1'].to_f
-          params[:tp] = item['tp1'].to_f
-          params[:wvspread] = item['wvspread1'].to_f
-          params[:wdir] = item['wdir1'].to_i
-          params[:sst] = item['sst'].to_f
-          params[:wspd] = item['wspd1'].to_f
-          params[:wvdir] = item['wvdir1'].to_f
-          params[:lat] = item['latitude'].to_f
-          params[:lon] = item['longitude'].to_f
-          params_total << params
+          if item['buoy_id'].to_i > 139
+            params[:date_time] = Time.parse(item['date_time'])
+            params[:buoy_id] = item['buoy_id']
+            params[:swvht] = item['swvht1'].to_f
+            params[:tp] = item['tp1'].to_f
+            params[:wvspread] = item['wvspread1'].to_f
+            params[:wdir] = item['wdir1'].to_i
+            params[:sst] = item['sst'].to_f
+            params[:wspd] = item['wspd1'].to_f
+            params[:wvdir] = item['wvdir1'].to_f
+            params[:lat] = item['latitude'].to_f
+            params[:lon] = item['longitude'].to_f
+            params_total << params
         end
       end
       return params_total
