@@ -87,6 +87,9 @@ class PagesController < ApplicationController
       end_date = Time.now + 1.day
     end
 
+    @start_date = start_date
+    @end_date = end_date
+
     @almirantado_int = NewSystem.where("name ='almirantado_int' ") [0]
     @almirantado_ext = NewSystem.where("name ='almirantado_ext' ") [0]
     @inpe = NewSystem.where("name ='inpe' ") [0]
@@ -94,6 +97,10 @@ class PagesController < ApplicationController
     @almirantado_int_data = get_remobs_new(@almirantado_int, start_date, end_date)
     @almirantado_ext_data = get_remobs_new(@almirantado_ext, start_date, end_date)
     @inpe_data = get_remobs_new(@inpe, start_date, end_date)
+
+    start_date = (Time.now - 5.day)
+    end_date = Time.now + 1.day
+    @drifters = get_remobs_sofar(start_date, end_date)
 
     @systems = [@almirantado_int, @almirantado_ext, @inpe]
   end

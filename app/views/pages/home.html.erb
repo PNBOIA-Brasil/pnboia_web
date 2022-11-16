@@ -131,16 +131,16 @@
 										<div class="row">
 											<div class="col-6 text-center">
 												<% if @almirantado_int_data[:swvht][0] %>
-													<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][0].round(1)%> m</p>
-													<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][0].round(1)%> s</p>
+													<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][0]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][0]%> s</p>
 													<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][0].round()%>°</p>
 												<% elsif @almirantado_int_data[:swvht][1] %>
-													<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][1].round(1)%> m</p>
-													<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][1].round(1)%> s</p>
+													<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][1]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][1]%> s</p>
 													<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][1].round()%>°</p>
 												<% elsif @almirantado_int_data[:swvht][2] %>
-													<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][2].round(1)%> m</p>
-													<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][2].round(1)%> s</p>
+													<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][2]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][2]%> s</p>
 													<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][2].round()%>°</p>
 												<% else %>
 													<p><strong>ALT. ONDAS:</strong> -- m</p>
@@ -239,16 +239,16 @@
 										<div class="row">
 											<div class="col-6 text-center"> 
 												<% if @inpe_data[:swvht][0] %>
-													<p><strong>ALT. ONDAS:</strong> <%= @inpe_data[:swvht][0].round(1)%> m</p>
-													<p><strong>PER. ONDAS:</strong> <%= @inpe_data[:tp][0].round(1)%> s</p>
+													<p><strong>ALT. ONDAS:</strong> <%= @inpe_data[:swvht][0]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @inpe_data[:tp][0]%> s</p>
 													<p><strong>DIR. ONDAS:</strong> <%= @inpe_data[:wvdir][0].round()%>°</p>
 												<% elsif @inpe_data[:swvht][1] %>
-													<p><strong>ALT. ONDAS:</strong> <%= @inpe_data[:swvht][1].round(1)%> m</p>
-													<p><strong>PER. ONDAS:</strong> <%= @inpe_data[:tp][1].round(1)%> s</p>
+													<p><strong>ALT. ONDAS:</strong> <%= @inpe_data[:swvht][1]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @inpe_data[:tp][1]%> s</p>
 													<p><strong>DIR. ONDAS:</strong> <%= @inpe_data[:wvdir][1].round()%>°</p>
 												<% elsif @inpe_data[:swvht][2] %>
-													<p><strong>ALT. ONDAS:</strong> <%= @inpe_data[:swvht][2].round(1)%> m</p>
-													<p><strong>PER. ONDAS:</strong> <%= @inpe_data[:tp][2].round(1)%> s</p>
+													<p><strong>ALT. ONDAS:</strong> <%= @inpe_data[:swvht][2]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @inpe_data[:tp][2]%> s</p>
 													<p><strong>DIR. ONDAS:</strong> <%= @inpe_data[:wvdir][2].round()%>°</p>
 												<% else %>
 													<p><strong>ALT. ONDAS:</strong> -- m</p>
@@ -306,7 +306,7 @@
 				</div>
 				<div class="col-sm-12 col-md-12 col-lg-12 text-center"> 
 					<h6 class='text-center observation1'>A disponibilização dos dados das boias de deriva é uma cortesia da empresa SOFAR OCEAN.</h6>
-					<h6 class='text-center observation1'>Para acesso a todos os dados destas boias, acesse:.</h6>
+					<h6 class='text-center observation1'>Para acesso a todos os dados destas boias, acesse:</h6>
 					<%= link_to image_tag("logo_sofar.png", class: "nav-img p-0"), "https://weather.sofarocean.com", target: :_blank %>
 				</div>
 			</div>
