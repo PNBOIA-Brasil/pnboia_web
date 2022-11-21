@@ -41,7 +41,7 @@ const initMapboxSofar = () => {
 			  <p class='m-0 p-0'><strong>Altura Onda:</strong> ${mark.swvht} m</p>
 			  <p class='m-0 p-0'><strong>Dir. Onda:</strong> ${mark.wvdir} °</p>
 			  <p class='m-0 p-0'><strong>Tp Onda:</strong> ${mark.tp} s</p>
-			  <p class='m-0 p-0'><strong>Vel. Vento:</strong> ${mark.wspd} m/s</p>
+			  <p class='m-0 p-0'><strong>Vel. Vento:</strong> ${mark.wspd} nós</p>
 			  <p class='m-0 p-0'><strong>Dir. Vento:</strong> ${mark.wdir} °</p>
 			  <p class='m-0 p-0'><strong>Temp. Água:</strong> ${mark.sst} °C</p></div>`))
 			.addTo(map);
@@ -108,7 +108,7 @@ const initMapboxNew = () => {
 			          <p class='m-0 p-0'><strong>DATA:</strong> ${almirantado_intData.date_time[0].slice(0,10)}</p>
 			          <p class='m-0 p-0'><strong>HORA:</strong> ${almirantado_intData.date_time[0].slice(11,16)}</p>
 			          <p class='m-0 p-0'><strong>Altura Onda:</strong> ${almirantado_intData.swvht[0]} m</p>
-			          <p class='m-0 p-0'><strong>Vel. Vento:</strong> ${almirantado_intData.wspd[0]} m/s</p></div>`))
+			          <p class='m-0 p-0'><strong>Vel. Vento:</strong> ${almirantado_intData.wspd[0]} nós</p></div>`))
 					.addTo(map);
 					markerAlmirantadoInt.getElement().addEventListener('click', () => {
 						almirantadoIntCard.classList.remove('card-animation');
@@ -143,7 +143,7 @@ const initMapboxNew = () => {
 			          <p class='m-0 p-0'><strong>DATA:</strong> ${almirantado_extData.date_time[0].slice(0,10)}</p>
 			          <p class='m-0 p-0'><strong>HORA:</strong> ${almirantado_extData.date_time[0].slice(11,16)}</p>
 			          <p class='m-0 p-0'><strong>Pressão:</strong> ${almirantado_extData.pres[0]} hPa</p>
-			          <p class='m-0 p-0'><strong>Vel. Vento:</strong> ${almirantado_extData.wspd[0]} m/s</p></div>`))
+			          <p class='m-0 p-0'><strong>Vel. Vento:</strong> ${almirantado_extData.wspd[0]} nós</p></div>`))
 					.addTo(map);
 					markerAlmirantadoExt.getElement().addEventListener('click', () => {
 						almirantadoExtCard.classList.remove('card-animation');
@@ -178,7 +178,7 @@ const initMapboxNew = () => {
 						<p class='m-0 p-0'><strong>DATA:</strong> ${inpeData.date_time[0].slice(0,10)}</p>
 	         			<p class='m-0 p-0'><strong>HORA:</strong> ${inpeData.date_time[0].slice(11,16)}</p>
 						<p class='m-0 p-0'><strong>Altura Onda:</strong> ${inpeData.swvht[0]} m</p>
-						<p class='m-0 p-0'><strong>Vel. Vento:</strong> ${inpeData.wspd[0]} m/s</p></div>`))
+						<p class='m-0 p-0'><strong>Vel. Vento:</strong> ${inpeData.wspd[0]} nós</p></div>`))
 					.addTo(map);
 					markerInpe.getElement().addEventListener('click', () => {
 						inpeCard.classList.remove('card-animation');

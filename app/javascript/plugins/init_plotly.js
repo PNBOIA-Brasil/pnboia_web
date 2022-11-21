@@ -518,10 +518,10 @@ const plotWspd = (almirantadointData, almirantadoextData, inpeData, language, in
     const data = [almirantadointWspd, almirantadoextWspd, inpeWspd];
 
     let text = 'VELOCIDADE DO VENTO'
-    let title = 'Veloc Vento (m/s)'
+    let title = 'Veloc Vento (nós)'
     if (language === 'english') {
       text = "WIND VELOCITY"
-      title = 'Wind Velocity (m/s)'
+      title = 'Wind Velocity (knots)'
     }
 
 

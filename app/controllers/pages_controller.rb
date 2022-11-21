@@ -220,13 +220,13 @@ class PagesController < ApplicationController
           if item['buoy_id'].to_i > 139
             params[:date_time] = Time.parse(item['date_time'])
             params[:buoy_id] = item['buoy_id']
-            params[:swvht] = item['swvht1'].to_f
-            params[:tp] = item['tp1'].to_f
+            params[:swvht] = (item['swvht1'].to_f).round(2)
+            params[:tp] = (item['tp1'].to_f).round(1)
             params[:wvspread] = item['wvspread1'].to_f
             params[:wdir] = item['wdir1'].to_i
             params[:sst] = item['sst'].to_f
-            params[:wspd] = item['wspd1'].to_f
-            params[:wvdir] = item['wvdir1'].to_f
+            params[:wspd] = (item['wspd1'].to_f * 1.94384).round(2)
+            params[:wvdir] = (item['wvdir1'].to_f).round()
             params[:lat] = item['latitude'].to_f
             params[:lon] = item['longitude'].to_f
             params_total << params
@@ -318,13 +318,13 @@ class PagesController < ApplicationController
           if item['flag_gust1'].to_i > 0 || item['flag_gust1'] == nil
             params[:gust] << nil
           else
-            params[:gust] << item['gust1'].to_f
+            params[:gust] << (item['gust1'].to_f * 1.94384).round(2)
           end
 
           if item['flag_wspd1'].to_i > 0 || item['flag_wspd1'] == nil
             params[:wspd] << nil
           else
-            params[:wspd] << item['wspd1'].to_f
+            params[:wspd] << (item['wspd1'].to_f * 1.94384).round(2)
           end
 
           if item['flag_wvdir1'].to_i > 0 || item['flag_wvdir1'] == nil
