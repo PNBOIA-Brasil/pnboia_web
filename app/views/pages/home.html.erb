@@ -102,31 +102,35 @@
 		</div>
 		<div id='fixed-buoys'>
 			<div class="row  ml-0 mr-0">
-				<div class="col-sm-12 col-md-6 col-lg-6 text-right"> 
+				<div class="col-sm-12 col-md-12 col-lg-12 text-right"> 
 					<div id="newmap"
-								style="width: 100%; height: 600px;"
+								style="width: 100%; height: 400px;"
 								data-markers="<%= @systems.to_json %>"
 								data-almirantadoint="<%= @almirantado_int_data.to_json %>"
 								data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
 								data-inpe="<%= @inpe_data.to_json %>"
+								data-potter="<%= @potter_data.to_json %>"
 								data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
 					</div>
 				</div>
-				<div class="col-sm-12 col-md-6 col-lg-6 text-right"> 
-					<% @systems.each do |system| %> 			
+				<% @systems.each do |system| %>
+					<div class="col-sm-12 col-md-6 col-lg-6 text-right"> 
 						<% if system.name.downcase == 'almirantado_int' %>
 							<div class="card-product mt-1 box" id='almirantado_int'>
-									<%= image_tag "spotter_blue.jpg"%>
+								<%= image_tag "spotter_blue.jpg"%>
 						<% elsif system.name.downcase == 'almirantado_ext'  %>
 							<div class="card-product mt-1 box" id='almirantado_ext'>
 								<%= image_tag "crios_buoy.jpg"%>
+						<% elsif system.name.downcase == 'potter'  %>
+							<div class="card-product mt-1 box" id='potter'>
+								<%= image_tag "spotter_yellow.jpg"%>
 						<% else %>
 							<div class="card-product mt-1 box" id='inpe'>
-				<%= image_tag "spotter_green.jpg"%>
+								<%= image_tag "spotter_green.jpg"%>
 						<% end %>
-							<div class="card-product-infos w-100">
-								<% if system.name.downcase == 'almirantado_int' %>
-									<h3 class='text-center'>KELLER</h3>
+								<div class="card-product-infos w-100">
+									<% if system.name.downcase == 'almirantado_int' %>
+										<h3 class='text-center'>KELLER</h3>
 										<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_int_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
 										<div class="row">
 											<div class="col-6 text-center">
@@ -173,10 +177,9 @@
 												<% end %>
 											</div>
 										</div>
-									
-								<% elsif system.name.downcase == 'almirantado_ext' %>
-									<h3 class='text-center'>CRIOSFERA</h3>
-									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_ext_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
+									<% elsif system.name.downcase == 'almirantado_ext' %>
+										<h3 class='text-center'>CRIOSFERA</h3>
+										<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_ext_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
 										<div class="row">
 											<div class="col-6 text-center"> 
 												<% if @almirantado_ext_data[:pres][0] %>
@@ -232,10 +235,57 @@
 												<% end %>
 											</div>
 										</div>
-									
-								<% else %>
-									<h3 class='text-center'>PINGUIM</h3>
-									<p class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @inpe_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
+									<% elsif system.name.downcase == 'potter' %>
+										<h3 class='text-center'>POTTER</h3>
+										<p class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @potter_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
+										<div class="row">
+											<div class="col-6 text-center"> 
+												<% if @potter_data[:swvht][0] %>
+													<p><strong>ALT. ONDAS:</strong> <%= @potter_data[:swvht][0]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @potter_data[:tp][0]%> s</p>
+													<p><strong>DIR. ONDAS:</strong> <%= @potter_data[:wvdir][0].round()%>°</p>
+												<% elsif @potter_data[:swvht][1] %>
+													<p><strong>ALT. ONDAS:</strong> <%= @potter_data[:swvht][1]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @potter_data[:tp][1]%> s</p>
+													<p><strong>DIR. ONDAS:</strong> <%= @potter_data[:wvdir][1].round()%>°</p>
+												<% elsif @potter_data[:swvht][2] %>
+													<p><strong>ALT. ONDAS:</strong> <%= @potter_data[:swvht][2]%> m</p>
+													<p><strong>PER. ONDAS:</strong> <%= @potter_data[:tp][2]%> s</p>
+													<p><strong>DIR. ONDAS:</strong> <%= @potter_data[:wvdir][2].round()%>°</p>
+												<% else %>
+													<p><strong>ALT. ONDAS:</strong> -- m</p>
+													<p><strong>PER. ONDAS:</strong> -- s</p>
+													<p><strong>DIR. ONDAS:</strong> -- °</p>
+												<% end %>
+											</div>
+											<div class="col-6 text-center"> 
+												<% if @potter_data[:sst][0] %>
+													<p><strong>SST:</strong> <%= @potter_data[:sst][0].round()%> °C</p>
+												<% elsif @potter_data[:sst][1] %>
+													<p><strong>SST:</strong> <%= @potter_data[:sst][1].round()%> °C</p>
+												<% elsif @potter_data[:sst][2] %>
+													<p><strong>SST:</strong> <%= @potter_data[:sst][2].round()%> °C</p>
+												<% else %>
+													<p><strong>SST:</strong> -- °C</p>
+												<% end %>
+												<% if @potter_data[:wspd][0] %>
+													<p><strong>VEL. VENTO:</strong> <%= @potter_data[:wspd][0].round()%> nós</p>
+													<p><strong>DIR. VENTO:</strong> <%= @potter_data[:wdir][0].round()%> °</p>
+												<% elsif @potter_data[:wspd][1] %>
+													<p><strong>VEL. VENTO:</strong> <%= @potter_data[:wspd][1].round()%> nós</p>
+													<p><strong>DIR. VENTO:</strong> <%= @potter_data[:wdir][1].round()%> °</p>
+												<% elsif @potter_data[:wspd][2] %>
+													<p><strong>VEL. VENTO:</strong> <%= @potter_data[:wspd][2].round()%> nós</p>
+													<p><strong>DIR. VENTO:</strong> <%= @potter_data[:wdir][2].round()%> °</p>
+												<% else %>
+													<p><strong>VEL. VENTO:</strong> -- nós</p>
+													<p><strong>DIR. VENTO:</strong> -- °</p>
+												<% end %>
+											</div>
+										</div>
+									<% else %>
+										<h3 class='text-center'>PINGUIM</h3>
+										<p class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @inpe_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
 										<div class="row">
 											<div class="col-6 text-center"> 
 												<% if @inpe_data[:swvht][0] %>
@@ -280,12 +330,12 @@
 													<p><strong>DIR. VENTO:</strong> -- °</p>
 												<% end %>
 											</div>
-										</div>								
-								<% end %>
-							</div>
-						</div>				
-					<% end %>
-				</div>
+										</div>
+									<% end %>
+								</div>
+							</div>				
+					</div>				
+				<% end %>
 			</div>
 		</div>
 		<div class="row mb-4 mt-4 ml-0 mr-0">
@@ -349,22 +399,27 @@
 			data-almirantadoint="<%= @almirantado_int_data.to_json %>"
 			data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
 			data-inpe="<%= @inpe_data.to_json %>"
+			data-potter="<%= @potter_data.to_json %>"
 			data-language='portuguese'>
 			<div id="wspd-plot" class='graph'>
 			</div>
 			<div id="wdir-plot" class='graph'>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-6">
 					<div id="wdir-plot-almirantadoint" class='graph'>
 					</div>
 				</div>
-				<div class="col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-6">
 					<div id="wdir-plot-almirantadoext" class='graph'>
 					</div>
 				</div>
-				<div class="col-sm-12 col-md-4">
+				<div class="col-sm-12 col-md-6">
 					<div id="wdir-plot-inpe" class='graph'>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6">
+					<div id="wdir-plot-potter" class='graph'>
 					</div>
 				</div>
 			</div>
@@ -373,12 +428,16 @@
 			<div id="wvdir-plot" class='graph'>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 col-md-6">
+				<div class="col-sm-12 col-md-4">
 					<div id="wvdir-plot-almirantadoint" class='graph'>
 					</div>
 				</div>
-				<div class="col-sm-12 col-md-6">
+				<div class="col-sm-12 col-md-4">
 					<div id="wvdir-plot-inpe" class='graph'>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-4">
+					<div id="wvdir-plot-potter" class='graph'>
 					</div>
 				</div>
 			</div>

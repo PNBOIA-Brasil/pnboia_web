@@ -81,3 +81,11 @@ s= NewSystem.new(
   lon: "-58.396869"
 )
 s.save!
+
+s= NewSystem.new(
+  name: "potter",
+  buoy_id: 25,
+  lat: "-62.289833", 
+  lon: "-58.547683"
+)
+s.save!

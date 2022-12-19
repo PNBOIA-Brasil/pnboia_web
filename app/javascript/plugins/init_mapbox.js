@@ -74,7 +74,9 @@ const initMapboxNew = () => {
 		const almirantado_intData = JSON.parse(mapElement.dataset.almirantadoint);
 		const almirantado_extData = JSON.parse(mapElement.dataset.almirantadoext);
 		const inpeData = JSON.parse(mapElement.dataset.inpe);
+		const potterData = JSON.parse(mapElement.dataset.potter);
 
+		const potterCard = document.getElementById('potter');
 		const inpeCard = document.getElementById('inpe');
 		const almirantadoIntCard = document.getElementById('almirantado_int');
 		const almirantadoExtCard = document.getElementById('almirantado_ext');
@@ -151,6 +153,41 @@ const initMapboxNew = () => {
 						almirantadoExtCard.classList.add('card-animation');
 			        });
 			    }
+			} else if (marker.name === 'potter'){
+				var potter = document.createElement('div');
+				potter.className = 'marker';
+				potter.style.backgroundImage = `url('${spotterIconYellow}')`;
+				potter.style.backgroundSize = 'contain';
+				potter.style.width = '40px';
+				potter.style.height = '31px';
+				if (JSON.stringify(potterData) === '{}'  || potterData.date_time.length === 0) {
+					const markerPotter = new mapboxgl.Marker(potter)
+					.setLngLat([ marker.lon, marker.lat ])
+					.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
+			        	<h3 class='m-0 p-0'><strong>A SER LANÇADA</strong></h3></div>`))
+					.addTo(map);
+					markerPotter.getElement().addEventListener('click', () => {
+						potterCard.classList.remove('card-animation');
+						void 	potterCard.offsetWidth; // trigger reflow
+						potterCard.classList.add('card-animation');
+					});
+				} else {
+					const markerPotter = new mapboxgl.Marker(potter)
+					.setLngLat([ marker.lon, marker.lat ])
+					.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
+			        	<h3 class='m-0 p-0'><strong>OPERATIVA</strong></h3>
+	          			<p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(marker.lat*100)/100}, <strong>LON:</strong> ${Math.round(marker.lon*100)/100}</p>
+						<p class='m-0 p-0'><strong>DATA:</strong> ${potterData.date_time[0].slice(0,10)}</p>
+	         			<p class='m-0 p-0'><strong>HORA:</strong> ${potterData.date_time[0].slice(11,16)}</p>
+						<p class='m-0 p-0'><strong>Altura Onda:</strong> ${potterData.swvht[0]} m</p>
+						<p class='m-0 p-0'><strong>Vel. Vento:</strong> ${potterData.wspd[0]} nós</p></div>`))
+					.addTo(map);
+					markerPotter.getElement().addEventListener('click', () => {
+						potterCard.classList.remove('card-animation');
+						void 	potterCard.offsetWidth; // trigger reflow
+						potterCard.classList.add('card-animation');
+			        });
+				}
 			} else {
 				var inpe = document.createElement('div');
 				inpe.className = 'marker';

@@ -33,25 +33,27 @@ const initPlotlyNew = () => {
     const almirantadointData = JSON.parse(chartElement.dataset.almirantadoint);
     const almirantadoextData = JSON.parse(chartElement.dataset.almirantadoext);
     const inpeData = JSON.parse(chartElement.dataset.inpe);
+    const potterData = JSON.parse(chartElement.dataset.potter);
     const language = chartElement.dataset.language;
     const inpeName = 'CRIOSFERA';
+    const potterName = 'POTTER';
     const oldCode = false;
 
-    plotWspd(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
-    plotWdir(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
-    plotWdirg(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
-    plotSwvht(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
-    plotWvdirg(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
-    plotWvdir(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
-    plotTp(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
-    plotSst(almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode);
+    plotWspd(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
+    plotWdir(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
+    plotWdirg(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
+    plotSwvht(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
+    plotWvdirg(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
+    plotWvdir(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
+    plotTp(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
+    plotSst(almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode);
     plotAtmp(almirantadoextData, language, inpeName, oldCode);
     plotPres(almirantadoextData, language, inpeName, oldCode);
     plotSss(almirantadoextData, language, inpeName, oldCode);
   }
 };
 
-const plotWvdir = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotWvdir = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
 
     const almirantadointWvdir = {
       x: almirantadointData.date_time,
@@ -64,19 +66,27 @@ const plotWvdir = (almirantadointData, almirantadoextData, inpeData, language, i
       }
     };
     
-    if (oldCode){
-      const almirantadoextWvdir = {
-        x: almirantadoextData.date_time,
-        y: almirantadoextData.wvdir,
-        mode: 'lines+markers',
-        name: inpeName,
-        line: {
-          color: '#2f42ad',
-          width: 2
-        }
-      };
-    }
-
+    const almirantadoextWvdir = {
+      x: almirantadoextData.date_time,
+      y: almirantadoextData.wvdir,
+      mode: 'lines+markers',
+      name: inpeName,
+      line: {
+        color: '#2f42ad',
+        width: 2
+      }
+    };
+    const potterWvdir = {
+      x: potterData.date_time,
+      y: potterData.wvdir,
+      mode: 'lines+markers',
+      name: 'POTTER',
+      line: {
+        color: '#ffea00',
+        width: 2,
+      }
+    }; 
+    
     const inpeWvdir = {
       x: inpeData.date_time,
       y: inpeData.wvdir,
@@ -92,7 +102,7 @@ const plotWvdir = (almirantadointData, almirantadoextData, inpeData, language, i
     if (oldCode){
       data = [almirantadointWvdir, almirantadoextWvdir, inpeWvdir];
     } else{
-      data = [almirantadointWvdir, inpeWvdir];
+      data = [almirantadointWvdir, inpeWvdir, potterWvdir];
     }
 
 
@@ -143,10 +153,9 @@ const plotWvdir = (almirantadointData, almirantadoextData, inpeData, language, i
 
     Plotly.newPlot('wvdir-plot', data, layout, config);
 
-
 };
 
-const plotWdir = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotWdir = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
 
     const almirantadointWdir = {
       x: almirantadointData.date_time,
@@ -182,8 +191,23 @@ const plotWdir = (almirantadointData, almirantadoextData, inpeData, language, in
       }
     };
 
-    const data = [almirantadointWdir, almirantadoextWdir, inpeWdir];
+    const potterWdir = {
+      x: potterData.date_time,
+      y: potterData.wdir,
+      mode: 'lines+markers',
+      name: 'POTTER',
+      line: {
+        color: '#ffea00',
+        width: 2
+      }
+    };
 
+    let data
+    if (oldCode){
+      data = [almirantadointWdir, almirantadoextWdir, inpeWdir];
+    } else{
+      data = [almirantadointWdir, almirantadoextWdir, inpeWdir, potterWdir];
+    }
     let text = 'DIR. VENTO'
     let title = 'Direção do Vento (°)'
     if (language === 'english') {
@@ -232,130 +256,170 @@ const plotWdir = (almirantadointData, almirantadoextData, inpeData, language, in
     Plotly.newPlot('wdir-plot', data, layout, config);
 };
 
-const plotWdirg = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotWdirg = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
+  const almirantadointWdir = {
+    theta: almirantadointData.wdirg,
+    name: 'almirantado_int',
+    line: {
+      color: '#c22d45',
+      width: 2
+    },
+    type: 'barpolar'
+  };
 
-    const almirantadointWdir = {
-      theta: almirantadointData.wdirg,
-      name: 'almirantado_int',
-      line: {
-        color: '#c22d45',
-        width: 2
+  const data1 = [almirantadointWdir];
+
+  var layout1 = {
+    title: {
+      text: 'KELLER',
+      font: {
+        family: 'Fira Sans, sans-serif',
+        size: 18
       },
-      type: 'barpolar'
-    };
-
-    const data1 = [almirantadointWdir];
-
-    var layout1 = {
-      title: {
-        text: 'KELLER',
-        font: {
-          family: 'Fira Sans, sans-serif',
-          size: 18
-        },
+    },
+    plot_bgcolor:"rgba(0,0,0,0)",
+    paper_bgcolor:"rgba(0,0,0,0)",
+    polar: {
+      radialaxis: {
+        visible: false
       },
-      plot_bgcolor:"rgba(0,0,0,0)",
-      paper_bgcolor:"rgba(0,0,0,0)",
-      polar: {
-        radialaxis: {
-          visible: false
+      angularaxis: {
+        tickfont: {
+          size: 8
         },
-        angularaxis: {
-          tickfont: {
-            size: 8
-          },
-          rotation: 90,
-          direction: "clockwise"
-        }
+        rotation: 90,
+        direction: "clockwise"
       }
-    };
+    }
+  };
 
-    var config = {responsive: true, displayModeBar: false }
+  var config = {responsive: true, displayModeBar: false }
 
-    Plotly.newPlot('wdir-plot-almirantadoint', data1, layout1, config);
+  Plotly.newPlot('wdir-plot-almirantadoint', data1, layout1, config);
 
-    const almirantadoextWdir = {
-      theta: almirantadoextData.wdirg,
-      name: 'almirantado_ext',
-      line: {
-        color: '#c22d45',
-        width: 2
+  const almirantadoextWdir = {
+    theta: almirantadoextData.wdirg,
+    name: 'almirantado_ext',
+    line: {
+      color: '#c22d45',
+      width: 2
+    },
+    type: 'barpolar'
+  };
+
+  const data2 = [almirantadoextWdir];
+
+  var layout2 = {
+    title: {
+      text: inpeName,
+      font: {
+        family: 'Fira Sans, sans-serif',
+        size: 18
       },
-      type: 'barpolar'
-    };
-
-    const data2 = [almirantadoextWdir];
-
-    var layout2 = {
-      title: {
-        text: inpeName,
-        font: {
-          family: 'Fira Sans, sans-serif',
-          size: 18
-        },
+    },
+    plot_bgcolor:"rgba(0,0,0,0)",
+    paper_bgcolor:"rgba(0,0,0,0)",
+    polar: {
+      radialaxis: {
+        visible: false
       },
-      plot_bgcolor:"rgba(0,0,0,0)",
-      paper_bgcolor:"rgba(0,0,0,0)",
-      polar: {
-        radialaxis: {
-          visible: false
+      angularaxis: {
+        tickfont: {
+          size: 8
         },
-        angularaxis: {
-          tickfont: {
-            size: 8
-          },
-          rotation: 90,
-          direction: "clockwise"
-        }
+        rotation: 90,
+        direction: "clockwise"
       }
-    };
-    var config = {responsive: true, displayModeBar: false }
+    }
+  };
+  var config = {responsive: true, displayModeBar: false }
 
-    Plotly.newPlot('wdir-plot-almirantadoext', data2, layout2, config);
+  Plotly.newPlot('wdir-plot-almirantadoext', data2, layout2, config);
 
-    const inpeWdir = {
-      theta: inpeData.wdirg,
-      name: 'inpe',
-      line: {
-        color: '#486641',
-        width: 2
+  const inpeWdir = {
+    theta: inpeData.wdirg,
+    name: 'inpe',
+    line: {
+      color: '#486641',
+      width: 2
+    },
+    type: 'barpolar'
+  };
+
+  const data3 = [inpeWdir];
+
+  var layout3 = {
+    title: {
+      text: 'PINGUIM',
+      font: {
+        family: 'Fira Sans, sans-serif',
+        size: 18
       },
-      type: 'barpolar'
-    };
-
-    const data3 = [inpeWdir];
-
-    var layout3 = {
-      title: {
-        text: 'PINGUIM',
-        font: {
-          family: 'Fira Sans, sans-serif',
-          size: 18
-        },
+    },
+    plot_bgcolor:"rgba(0,0,0,0)",
+    paper_bgcolor:"rgba(0,0,0,0)",
+    polar: {
+      radialaxis: {
+        visible: false
       },
-      plot_bgcolor:"rgba(0,0,0,0)",
-      paper_bgcolor:"rgba(0,0,0,0)",
-      polar: {
-        radialaxis: {
-          visible: false
+      angularaxis: {
+        tickfont: {
+          size: 8
         },
-        angularaxis: {
-          tickfont: {
-            size: 8
-          },
-          rotation: 90,
-          direction: "clockwise"
-        }
+        rotation: 90,
+        direction: "clockwise"
       }
-    };
+    }
+  };
 
-    var config = {responsive: true, displayModeBar: false }
+  var config = {responsive: true, displayModeBar: false }
 
-    Plotly.newPlot('wdir-plot-inpe', data3, layout3, config);
+  Plotly.newPlot('wdir-plot-inpe', data3, layout3, config);
+
+  const potterWdir = {
+    theta: potterData.wdirg,
+    name: 'potter',
+    line: {
+      color: '#ffea00',
+      width: 2
+    },
+    type: 'barpolar'
+  };
+
+  const data4 = [potterWdir];
+
+  var layout4 = {
+    title: {
+      text: 'POTTER',
+      font: {
+        family: 'Fira Sans, sans-serif',
+        size: 18
+      },
+    },
+    plot_bgcolor:"rgba(0,0,0,0)",
+    paper_bgcolor:"rgba(0,0,0,0)",
+    polar: {
+      radialaxis: {
+        visible: false
+      },
+      angularaxis: {
+        tickfont: {
+          size: 8
+        },
+        rotation: 90,
+        direction: "clockwise"
+      }
+    }
+  };
+
+  var config = {responsive: true, displayModeBar: false }
+
+  if (!oldCode){
+    Plotly.newPlot('wdir-plot-potter', data4, layout4, config);
+  }
 };
 
-
-const plotWvdirg = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotWvdirg = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
 
     const almirantadointWvdir = {
       theta: almirantadointData.wvdirg,
@@ -475,11 +539,50 @@ const plotWvdirg = (almirantadointData, almirantadoextData, inpeData, language, 
 
     Plotly.newPlot('wvdir-plot-inpe', data3, layout3, config);
 
+    const potterWvdir = {
+      theta: potterData.wvdirg,
+      name: 'potter',
+      line: {
+        color: '#c22d45',
+        width: 2
+      },
+      type: 'barpolar'
+    };
+
+    const data4 = [potterWvdir];
+
+    var layout4 = {
+      title: {
+        text: 'POTTER',
+        font: {
+          family: 'Fira Sans, sans-serif',
+          size: 18
+        },
+      },
+      plot_bgcolor:"rgba(0,0,0,0)",
+      paper_bgcolor:"rgba(0,0,0,0)",
+      polar: {
+        radialaxis: {
+          visible: false
+        },
+        angularaxis: {
+          tickfont: {
+            size: 8
+          },
+          rotation: 90,
+          direction: "clockwise"
+        }
+      }
+    };
+
+    if (!oldCode){
+      Plotly.newPlot('wvdir-plot-potter', data4, layout4, config);
+    }
 
 };
 
 
-const plotWspd = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotWspd = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
 
     const almirantadointWspd = {
       x: almirantadointData.date_time,
@@ -514,8 +617,22 @@ const plotWspd = (almirantadointData, almirantadoextData, inpeData, language, in
       }
     };
 
-
-    const data = [almirantadointWspd, almirantadoextWspd, inpeWspd];
+    const potterWspd = {
+      x: potterData.date_time,
+      y: potterData.wspd,
+      mode: 'lines+markers',
+      name: 'POTTER',
+      line: {
+        color: '#ffea00',
+        width: 2,
+      }
+    };
+    let data
+    if (oldCode){
+      data = [almirantadointWspd, almirantadoextWspd, inpeWspd];
+    } else{
+      data = [almirantadointWspd, almirantadoextWspd, inpeWspd, potterWspd];
+    }
 
     let text = 'VELOCIDADE DO VENTO'
     let title = 'Veloc Vento (nós)'
@@ -567,7 +684,7 @@ const plotWspd = (almirantadointData, almirantadoextData, inpeData, language, in
 
 };
 
-const plotSwvht = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotSwvht = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
 
     const almirantadointSwvht = {
       x: almirantadointData.date_time,
@@ -601,12 +718,22 @@ const plotSwvht = (almirantadointData, almirantadoextData, inpeData, language, i
         width: 2,
       }
     };
+    const potterSwvht = {
+      x: potterData.date_time,
+      y: potterData.swvht,
+      mode: 'lines+markers',
+      name: 'POTTER',
+      line: {
+        color: '#ffea00',
+        width: 2,
+      }
+    };
 
     let data
     if (oldCode){
       data = [almirantadointSwvht, almirantadoextSwvht, inpeSwvht];
     } else{
-      data = [almirantadointSwvht, inpeSwvht];
+      data = [almirantadointSwvht, inpeSwvht, potterSwvht];
     }
 
     let text = 'ALTURA SIG. ONDA'
@@ -657,7 +784,7 @@ const plotSwvht = (almirantadointData, almirantadoextData, inpeData, language, i
 
 };
 
-const plotTp = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotTp = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
 
   const almirantadointtp = {
     x: almirantadointData.date_time,
@@ -691,12 +818,22 @@ const plotTp = (almirantadointData, almirantadoextData, inpeData, language, inpe
       width: 2,
     }
   };
+  const pottertp = {
+    x: potterData.date_time,
+    y: potterData.tp,
+    mode: 'lines+markers',
+    name: 'POTTER',
+    line: {
+      color: '#ffea00',
+      width: 2,
+    }
+  };
 
   let data
   if (oldCode){
     data = [almirantadointtp, almirantadoexttp, inpetp];
   } else{
-    data = [almirantadointtp, inpetp];
+    data = [almirantadointtp, inpetp, pottertp];
   }
 
   let text = 'PERÍODO DE PICO DE ONDA'
@@ -749,7 +886,7 @@ const plotTp = (almirantadointData, almirantadoextData, inpeData, language, inpe
 };
 
 
-const plotSst = (almirantadointData, almirantadoextData, inpeData, language, inpeName, oldCode) => {
+const plotSst = (almirantadointData, almirantadoextData, inpeData, potterData, language, inpeName, oldCode) => {
 
     const almirantadointSst = {
       x: almirantadointData.date_time,
@@ -784,8 +921,23 @@ const plotSst = (almirantadointData, almirantadoextData, inpeData, language, inp
       }
     };
 
+    const potterSst = {
+      x: potterData.date_time,
+      y: potterData.sst,
+      mode: 'lines+markers',
+      name: 'POTTER',
+      line: {
+        color: '#ffea00',
+        width: 2,
+      }
+    };
 
-    const data = [almirantadointSst, almirantadoextSst,inpeSst];
+    let data
+    if (oldCode){
+      data = [almirantadointSst, almirantadoextSst, inpeSst];
+    } else{
+      data = [almirantadointSst, almirantadoextSst, inpeSst, potterSst];
+    }
 
     let text = 'TEMP. ÁGUA DO MAR'
     let title = 'Temperatura (°C)'
