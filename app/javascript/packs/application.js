@@ -27,7 +27,7 @@ import "bootstrap";
 import { initMapbox, initMapboxNew, initMapboxDrifter, initMapboxSofar } from '../plugins/init_mapbox';
 import { initPlotly, initPlotlyNew } from '../plugins/init_plotly';
 import { initPopup } from '../plugins/init_popup';
-// import { initTab } from '../plugins/init_tab';
+import { initTab } from '../plugins/init_tab';
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
@@ -47,5 +47,5 @@ document.addEventListener('turbolinks:load', () => {
   initSmooth();
   initUpdateNavbarOnScroll();
   initQuotes();
-  // initTab();
+  initTab();
 })

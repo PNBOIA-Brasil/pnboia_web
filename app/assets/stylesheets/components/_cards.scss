@@ -52,36 +52,117 @@
   animation-duration: 3s; 
 }
 
-.card-product {
+
+.card-product-big {
+  position: relative;
   overflow: hidden;
   // height: 120px;
   background: #008CEA;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  display: flex;
   align-items: center;
-  height: 199px;
+  height: 100%;
+  width: 100%;
 }
 
-.card-product img {
+
+.close-btn{
+  background-color: rgba(0,0,0,0);
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  cursor: pointer; /* Mouse pointer on hover */
+  color: white;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 17px;
+  opacity: 0.7;
+  &:hover{
+    opacity: 1.0;
+  }
+}
+.card-product-big img {
   height: 80%;
-  width: 110px;
+  width: 30px;
   object-fit: contain;
 }
 
-.card-product h3 {
-  font-size: 20px;
+.card-product-big h3 {
+  font-size: 13px;
   font-weight: bold;
   margin: 0;
 }
+.card-product-big h3.title {
+  font-size: 15px;
+}
 
-.card-product p {
-  font-size: 16px;
+.card-product-big p {
+  font-size: 12px;
   line-height: 1.4;
   opacity: .7;
   margin-bottom: 0;
   margin-top: 8px;
 }
 
+.card-product-big .card-product-infos {
+  padding: 16px;
+}
+
+
+
+
+.card-product {
+  overflow: hidden;
+  cursor: pointer; /* Mouse pointer on hover */
+  background: #008CEA;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  height: 35px;
+  &:hover{
+    opacity: 0.7;
+  }
+}
+
+.card-product-big a {
+  color: white;
+  font-size: 100%;
+  .white-button-small {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    border: 2px solid white;
+    font-weight: bold;
+    border-radius: 5px;
+    text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+    &:hover {
+      background-color: white;
+      color: grey;
+      text-shadow: none;
+    }
+  }
+}
+
+
+.card-product img {
+  height: 80%;
+  width: 20px;
+  object-fit: contain;
+}
+
+.card-product h3 {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-product p {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: .7;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
 
 .card-product .card-product-infos {
   padding: 16px;
