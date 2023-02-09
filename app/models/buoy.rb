@@ -1,0 +1,2 @@
+class Buoy < ApplicationRecord
+end

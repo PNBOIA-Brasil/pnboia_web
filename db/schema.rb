@@ -10,34 +10,75 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_14_144626) do
+ActiveRecord::Schema.define(version: 2023_02_09_212611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "new_systems", force: :cascade do |t|
-    t.string "name"
-    t.string "buoy_id"
-    t.float "lat"
-    t.float "lon"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "systems", force: :cascade do |t|
-    t.string "name"
-    t.string "buoy_id"
-    t.float "lat"
-    t.float "lon"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "tides", force: :cascade do |t|
-    t.datetime "date_time"
-    t.float "elev"
+  create_table "buoys", force: :cascade do |t|
+    t.integer "buoy_id"
+    t.integer "hull_id"
+    t.string "name"
+    t.date "deploy_date"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.boolean "status"
+    t.string "mode"
+    t.string "wmo_number"
+    t.string "antenna_id"
+    t.boolean "open_data"
+    t.text "link_site_pnboia"
+    t.integer "project_id"
+    t.text "manufacturer"
+    t.string "model"
+    t.decimal "diameter"
+    t.decimal "weight"
+    t.decimal "depth"
+    t.text "sensor_description"
+    t.text "working_cycle"
+    t.text "observation"
+    t.text "picture"
+    t.text "profile_picture"
+    t.text "dimension_picture"
+    t.text "mooring_picture"
+    t.text "working_cycle_picture"
+  end
+
+  create_table "sites", force: :cascade do |t|
+    t.text "about"
+    t.text "history"
+    t.text "institution"
+    t.text "goal"
+    t.text "problem"
+    t.text "observation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "picture"
+    t.text "quality_control_file"
+    t.text "vandalism_file"
+    t.text "article_file"
+    t.text "pnt_file"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,4 +95,5 @@ ActiveRecord::Schema.define(version: 2022_11_14_144626) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
 end

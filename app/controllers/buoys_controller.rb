@@ -1,5 +1,7 @@
-class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home, :position, :english, :operantarxl, :operantarxl_en]
+class BuoysController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show, :create, :update, :destroy, :new]
+  before_action :set_buoy, only: [:show]
+  before_action :set_variable, only: [:index, :show]
 
   def admin
     if current_user.admin
@@ -10,8 +12,138 @@ class PagesController < ApplicationController
     end
   end
 
-  def home
-    @lasts = get_last_data()
+  def index
+    @lasts = get_last_data()  
+  end
+
+  def show
+    if params[:commit]
+      start_date = params[:start_date]
+      end_date = params[:end_date]
+      start_date = Date.parse start_date
+      end_date = Date.parse end_date
+    else
+      end_date = Time.parse @last['date_time']
+      start_date = (Time.parse @last['date_time'] - 5.day)
+    end
+    if end_date == nil
+      end_date = Time.parse @last['date_time']
+    end
+    if start_date == nil
+      start_date = (end_date - 5.day)
+    end
+    if end_date < start_date
+      start_date = (end_date - 1.day)
+    end
+    @start_date = start_date
+    @end_date = end_date
+
+    @almirantado_int_data = get_remobs_new(@almirantado_int, start_date, end_date)
+  end
+
+
+  def new
+    @sensor = Sensor.new
+    @situations = Situation.all
+    @places = Place.all
+    @items = Item.all
+    @item_types = ItemType.all
+    authorize @sensor
+  end
+
+  def create
+    @sensor = Sensor.new(sensor_params)
+    if @sensor.model
+      @sensor.model.downcase!
+    end
+    if @sensor.manufacturer
+      @sensor.manufacturer.downcase!
+    end
+    if @sensor.observation
+      @sensor.observation.downcase!
+    end
+    @id = Sensor.maximum(:id) + 1
+    @sensor.id = @id
+    authorize @sensor
+    if @sensor.save
+      @historic_sensor = HistoricSensor.new(hist_sensor_params)
+      if @historic_sensor.model
+        @historic_sensor.model.downcase!
+      end
+      if @historic_sensor.manufacturer
+        @historic_sensor.manufacturer.downcase!
+      end
+      if @historic_sensor.observation
+        @historic_sensor.observation.downcase!
+      end
+      @historic_sensor.sensor = @sensor
+      @historic_sensor.user = current_user
+      @historic_sensor.save
+      redirect_to sensor_path(@sensor)
+    else
+      render :new
+    end
+  end
+
+  def show
+    @historic_sensors = HistoricSensor.where("sensor_id = #{@sensor.id}").order(updated_at: :desc)
+  end
+
+  def edit
+    @situations = Situation.all
+    @places = Place.all
+    @items = Item.all
+    @item_types = ItemType.all
+  end
+
+  def update
+    @sensor1 = @sensor.dup
+    @sensor.update(sensor_params)
+    if @sensor1.place_id != @sensor.place_id || @sensor1.situation_id != @sensor.situation_id || @sensor1.calibration_date != @sensor.calibration_date || @sensor1.acquisition_date != @sensor.acquisition_date || @sensor1.maintenance_date != @sensor.maintenance_date || @sensor1.observation != @sensor.observation
+      @historic_sensor = HistoricSensor.new(hist_sensor_params)
+      @historic_sensor.sensor = @sensor
+      @historic_sensor.user = current_user
+      @historic_sensor.save
+    end
+    redirect_to sensor_path(@sensor)
+  end
+
+  def destroy
+    @sensor.destroy
+    redirect_to root_path
+  end
+
+  def delete_image_attachment
+    @image = ActiveStorage::Blob.find_signed(params[:format])
+    @sensor.files.each do |file|
+      if @image.id == file.id
+        file.purge
+      end
+    end
+    set_sensor
+    @situations = Situation.all
+    @places = Place.all
+    @items = Item.all
+    @item_types = ItemType.all
+    redirect_to edit_sensor_path(@sensor)
+  end
+
+  def add_image_attachment
+    @file_params = file_params
+    @file_params[:files].each do |file|
+      @sensor.files.attach(file)
+    end
+    @situations = Situation.all
+    @places = Place.all
+    @items = Item.all
+    @item_types = ItemType.all
+    redirect_to sensor_path(@sensor)
+  end
+
+
+  private
+
+  def set_variable
     @meteorologys = {'wspd1': ["VEL. VENTO 1", 'nós'],'wdir1': ["DIR. VENTO 1", '°'], 'gust1': ["RAJADA 1", 'nós'],
       'wspd2': ["VEL. VENTO 2", 'nós'],'wdir2': ["DIR. VENTO 2", '°'], 'gust2': ["RAJADA 2", 'nós'],
       'atmp': ['TEMP. AR', '°C'], 'pres': ['PRESSÃO', 'mb'], 'srad': ['RADIAÇÃO', 'W/m²'],
@@ -26,99 +158,12 @@ class PagesController < ApplicationController
       'wvspread1': ['ESPALHAMENTO 1', '°'],
       'swvht2': ['ALTURA SIG.2', 'm'], 'tp2': ['PER. PICO.2', 's'],
       'wvdir2': ['DIR. MÉDIA2', '°']}    
-    end
-  def old_home
-    if params[:commit]
-      @popup = false
-      start_date = params[:start_date]
-      end_date = params[:end_date]
-      start_date = Date.parse start_date
-      end_date = Date.parse end_date
-    else
-      @popup = true
-      start_date = (Time.now - 1.day)
-      end_date = (Time.now + 1.day)
-    end
-    if start_date == nil
-      start_date = (Time.now - 5.day)
-    end
-    if end_date == nil
-      end_date = Time.now + 1.day
-    end
-    if start_date < (Time.now - 5.day)
-      start_date = (Time.now - 5.day)
-    end
-    if end_date < start_date
-      end_date = Time.now + 1.day
-    end
-
-    @start_date = start_date
-    @end_date = end_date
-
-    @almirantado_int = NewSystem.where("name ='almirantado_int' ") [0]
-    @almirantado_ext = NewSystem.where("name ='almirantado_ext' ") [0]
-    @inpe = NewSystem.where("name ='inpe' ") [0]
-    @potter = NewSystem.where("name ='potter' ") [0]
-
-    @almirantado_int_data = get_remobs_new(@almirantado_int, start_date, end_date)
-    @almirantado_ext_data = get_remobs_new(@almirantado_ext, start_date, end_date)
-    @inpe_data = get_remobs_new(@inpe, start_date, end_date)
-    @potter_data = get_remobs_new(@potter, start_date, end_date)
-
-    start_date = (Time.now - 5.day)
-    end_date = Time.now + 1.day
-    @drifters = get_remobs_sofar(start_date, end_date)
-    @systems = [@almirantado_int, @almirantado_ext, @inpe, @potter]
 
   end
 
-  def english
-    if params[:commit]
-      @popup = false
-      start_date = params[:start_date]
-      end_date = params[:end_date]
-      start_date = Date.parse start_date
-      end_date = Date.parse end_date
-    else
-      @popup = true
-      start_date = (Time.now - 1.day)
-      end_date = (Time.now + 1.day)
-    end
-    if start_date == nil
-      start_date = (Time.now - 5.day)
-    end
-    if end_date == nil
-      end_date = Time.now + 1.day
-    end
-    if start_date < (Time.now - 5.day)
-      start_date = (Time.now - 5.day)
-    end
-    if end_date < start_date
-      end_date = Time.now + 1.day
-    end
-
-    @start_date = start_date
-    @end_date = end_date
-
-    @almirantado_int = NewSystem.where("name ='almirantado_int' ") [0]
-    @almirantado_ext = NewSystem.where("name ='almirantado_ext' ") [0]
-    @inpe = NewSystem.where("name ='inpe' ") [0]
-    @potter = NewSystem.where("name ='potter' ") [0]
-
-    @almirantado_int_data = get_remobs_new(@almirantado_int, start_date, end_date)
-    @almirantado_ext_data = get_remobs_new(@almirantado_ext, start_date, end_date)
-    @inpe_data = get_remobs_new(@inpe, start_date, end_date)
-    @potter_data = get_remobs_new(@potter, start_date, end_date)
-
-    start_date = (Time.now - 5.day)
-    end_date = Time.now + 1.day
-    @drifters = get_remobs_sofar(start_date, end_date)
-
-    @systems = [@almirantado_int, @almirantado_ext, @inpe, @potter]
+  def set_buoy
+    @last = get_last_data(params[:id])
   end
-
-  private
-
 
   def get_buoys()
     begin
@@ -136,55 +181,29 @@ class PagesController < ApplicationController
     end
   end
 
-  def get_last_data()
+  def get_last_data(buoy_id=false)
     begin
       response = RestClient.get("http://52.67.222.63/v1/qualified_data/qualified_data/last?token=#{ENV["PNBOIA_TOKEN"]}")
       remobs_response = JSON.parse(response)
 
       params = []
-
-      remobs_response.each do |item|
-        params << item
+      if !buoy_id
+        remobs_response.each do |item|
+          params << item
+        end
+      else
+        remobs_response.each do |item|
+          if item['buoy_id'].to_i == buoy_id.to_i
+            params = item
+            return params
+          end
+        end
       end
       return params
     rescue
       return []
     end
   end
-  def get_remobs_sofar(start_date, end_date)
-    begin
-      response = RestClient.get("http://remobsapi.herokuapp.com/api/v2/drift_values/last?start_date=#{start_date.strftime("%Y-%m-%d")}&end_date=#{end_date.strftime("%Y-%m-%d")}&token=#{ENV["REMOBS_TOKEN"]}")
-
-      remobs_response = JSON.parse(response)
-
-      params_total = []
-      params = {}
-
-      remobs_response.each do |item|
-        params = {}
-        if item['latitude']
-          if item['buoy_id'].to_i > 139
-            params[:date_time] = Time.parse(item['date_time'])
-            params[:buoy_id] = item['buoy_id']
-            params[:swvht] = (item['swvht1'].to_f).round(2)
-            params[:tp] = (item['tp1'].to_f).round(1)
-            params[:wvspread] = item['wvspread1'].to_f
-            params[:wdir] = item['wdir1'].to_i
-            params[:sst] = item['sst'].to_f
-            params[:wspd] = (item['wspd1'].to_f * 1.94384).round(2)
-            params[:wvdir] = (item['wvdir1'].to_f).round()
-            params[:lat] = item['latitude'].to_f
-            params[:lon] = item['longitude'].to_f
-            params_total << params
-          end
-        end
-      end
-      return params_total
-    rescue
-      return []
-    end
-  end
-
 
   def get_remobs_new(buoy, start_date, end_date)
     if buoy.buoy_id

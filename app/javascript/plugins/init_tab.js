@@ -17,7 +17,7 @@ const initTab = () => {
                 let classBuoy = smallButton.classList[4];
                 let bigCard = document.querySelector(`.${classBuoy}-01`)
                 bigCard.classList.remove('inactive-tab');
-                initMapboxNew(marker.buoy.longitude, marker.buoy.latitude, 8);
+                initMapboxNew(marker, 8);
             });
         });
 		closeBtns.forEach((closeBtn) => {

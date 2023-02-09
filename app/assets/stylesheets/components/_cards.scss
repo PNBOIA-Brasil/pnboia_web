@@ -123,6 +123,28 @@
   }
 }
 
+.pop-up a{
+  color: white;
+  font-size: 100%;
+  text-decoration: None;
+  .orange-button-xsmall {
+    border-color: rgba(0,0,0,0);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: #3FAEFD;
+    border-radius: 5px;
+    -webkit-transition: background-color 0.75s, color 0.75s;
+    transition: background-color 0.75s, color 0.75s;
+    &:hover {
+      background-color: #FEDC37 !important;
+      opacity: 1.0 !important;
+    }
+  }
+}
+
 .card-product-big a {
   color: white;
   font-size: 100%;

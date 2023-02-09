@@ -6,6 +6,7 @@ import criosIcon from '../images/crios_buoy.png';
 import tideIcon from '../images/maregrafo.png';
 import weatherIcon from '../images/weather.png';
 import buoyRed from '../images/buoy_red.png';
+import buoyYellow from '../images/buoy_yellow.png';
 import buoyGreen from '../images/buoy_green.png';
 
 
@@ -54,11 +55,11 @@ const initMapboxSofar = () => {
 };
 
 
-const initMapboxNew = (lat=-30.9639, lon=-32.5835, zoom=2) => {
+const initMapboxNew = (newMarker=false, zoom=2) => {
 
 	const fitMapToMarkers = (map, lat, lon, zoom) => {
 		const bounds = new mapboxgl.LngLatBounds();
-		bounds.extend([ lat, lon ]);
+		bounds.extend([ lon, lat ]);
 		map.fitBounds(bounds, { padding: 70, maxZoom: zoom, duration: 0 });
 	};
   
@@ -93,12 +94,55 @@ const initMapboxNew = (lat=-30.9639, lon=-32.5835, zoom=2) => {
 			markerBuoy = new mapboxgl.Marker(buoyMarker)
 				.setLngLat([ marker.buoy.longitude, marker.buoy.latitude ])
 				.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
-					<h3 class='m-0 p-0'><strong>${situation}</strong></h3>
+					<h5 class='m-0 p-0'><strong>${situation}</strong></h5>
 					<p class='m-0 p-0'><strong>${marker.buoy.name}</strong></p>
-					<p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(marker.buoy.latitude*1000)/1000}, <strong>LON:</strong> ${Math.round(marker.buoy.longitude*1000)/1000}</p></div>`))
+					<p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(marker.buoy.latitude*1000)/1000}, <strong>LON:</strong> ${Math.round(marker.buoy.longitude*1000)/1000}</p>
+					<a class='' href="#projetos">
+						<div class="orange-button-xsmall">MAIS INFORMAÇÕES</div>
+					</a>
+				</div>`))
 				.addTo(map);
+			let markerCard = document.querySelector(`.boia-${marker.buoy_id}`)
+			markerBuoy.getElement().addEventListener('click', () => {
+				markerCard.classList.remove('card-animation');
+				void 	markerCard.offsetWidth; // trigger reflow
+				markerCard.classList.add('card-animation');
+			});
 		});
-		
+		let lat
+		let lon
+		if (newMarker){
+			lat = newMarker.buoy.latitude			
+			lon = newMarker.buoy.longitude
+			var buoyMarker = document.createElement('div');
+			buoyMarker.className = 'marker';
+			let situation
+			if (newMarker.buoy.status) {
+				buoyMarker.style.backgroundImage = `url('${buoyYellow}')`;
+				situation = 'OPERATIVA'
+			} else {
+				buoyMarker.style.backgroundImage = `url('${buoyYellow}')`;
+				situation = 'MANUTENÇÃO'
+			}
+			buoyMarker.style.backgroundSize = 'contain';
+			buoyMarker.style.width = '15px';
+			buoyMarker.style.height = '29px';
+			let markerBuoy
+			markerBuoy = new mapboxgl.Marker(buoyMarker)
+				.setLngLat([ newMarker.buoy.longitude, newMarker.buoy.latitude ])
+				.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
+					<h5 class='m-0 p-0'><strong>${situation}</strong></h5>
+					<p class='m-0 p-0'><strong>${newMarker.buoy.name}</strong></p>
+					<p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(newMarker.buoy.latitude*1000)/1000}, <strong>LON:</strong> ${Math.round(newMarker.buoy.longitude*1000)/1000}</p>
+					<a class='' href="#projetos">
+						<div class="orange-button-xsmall">MAIS INFORMAÇÕES</div>
+					</a>
+				</div>`))
+				.addTo(map);
+		} else {
+			lat =-30.9639
+			lon =-32.5835
+		}
 		fitMapToMarkers(map, lat, lon, zoom);
 	}
 };
