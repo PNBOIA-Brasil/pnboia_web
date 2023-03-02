@@ -145,24 +145,95 @@
   }
 }
 
-.card-product-big a {
-  color: white;
-  font-size: 100%;
-  .white-button-small {
+#plotdata{
+  .white-button-tab {
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 15px;
-    border: 2px solid white;
     font-weight: bold;
     border-radius: 5px;
-    text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+    text-shadow: 0px 0px 3px black, 1px 0px 2px white;
+    background-color: white;
+    color: grey;
+    text-shadow: none;
+    border: 2px solid white;
+
     &:hover {
-      background-color: white;
-      color: grey;
-      text-shadow: none;
+      border: 2px solid black;
+      text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+      color: #0E0000;
+      background-color: rgba(0,0,0,0);  
     }
   }
+  .active{
+    border: 2px solid black;
+    text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+    color: #0E0000;
+    background-color: rgba(0,0,0,0);
+  }
+}
+
+
+.white-button-small {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  border: 2px solid white;
+  font-weight: bold;
+  border-radius: 5px;
+  text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+  &:hover {
+    background-color: white;
+    color: grey;
+    text-shadow: none;
+  }
+}
+.card-product-big a {
+  color: white;
+  font-size: 100%;
+}
+
+
+.card-product-new {
+  overflow: hidden;
+  cursor: pointer; /* Mouse pointer on hover */
+  background: rgba(0,0,0,0);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  height: 35px;
+  width: 100%;
+  &:hover{
+    opacity: 0.7;
+  }
+}
+
+.card-product-new img {
+  height: 80%;
+  width: 20px;
+  object-fit: contain;
+}
+
+.card-product-new h3 {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-product-new p {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: .7;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+.card-product-new .card-product-infos {
+  padding: 16px;
 }
 
 
@@ -189,6 +260,11 @@
 .card-product .card-product-infos {
   padding: 16px;
 }
+
+.active10 {
+  background-color: #FEDC37;
+}
+
 
 .pop-up{
   color: black;

@@ -1,0 +1,118 @@
+<%= render 'shared/navbar' %>
+
+<div class="front-page-buoy banner  position-relative" style="background-image: url('<%= image_path 'banner.jpg' %>')" id="home">
+  <div class="container banner">
+    <h1 class='banner-title'>ACESSO AOS DADOS</h1>
+  </div>
+</div>
+<div id='data-access' class='container'>
+    <p class='pt-5 text-center'>Para acessar aos dados das boias, clique em uma boia,
+    selecione o horário de início e fim dos dados e escolha o
+    formato de download.</p>
+    <div class="row ml-0 mr-0 pt-3 pb-5">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right"> 
+            <div class="row ml-0 mr-0">
+                <% @lasts.each_with_index do |last, idx| %>
+                    <div class="col-sm-4 col-md-4 col-lg-4 text-right" id='all-card-small'> 
+                        <% if @file_download.to_i == last['buoy']['buoy_id'].to_i %>
+                            <div class="card-product mt-1 p-0 box boia-<%=last['buoy_id']%> active10" id='card-small1' data-markers="<%= last.to_json %>"
+                        <% else %>
+                            <div class="card-product mt-1 p-0 box boia-<%=last['buoy_id']%>" id='card-small1' data-markers="<%= last.to_json %>"
+                        <% end %>
+                            data-last="<%= last.to_json %>"
+                            data-first="<%= @firsts[idx].to_json %>"
+                            data-pnboia-api-key="<%= ENV['PNBOIA_API_TOKEN'] %>"
+                            >
+                            <% if last['buoy']['status'] %>
+                                <%= image_tag "buoy_green.png"%>
+                            <% else %>
+                                <%= image_tag "buoy_red.png"%>
+                            <% end %>                            
+                            <div class="card-product-infos w-100">
+                                <h3 class='text-center'><%= last['buoy']["name"] %></h3>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-5 inactive-tab" id='date-download'> 
+            <%= form_tag download_csv_path, method: :post, class: 'animate-pisc p-1' do %>
+                <div class='row justify-content-center'>
+                    <div class="col-sm-12 col-md-3 col-lg-3"> 
+                        <p  class='m-0 p-0 letter-date'>Data Inicial:</p>
+                        <%= date_field_tag :start_date,
+                        params[:start_date],
+                        class: "form-control input-sm p-0",
+                        placeholder: "Data Inicial"
+                        %>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3"> 
+                        <p class='m-0 p-0  letter-date'>Data Final:</p>
+                        <%= date_field_tag :end_date,
+                        params[:end_date],
+                        class: "form-control input-sm p-0",
+                        placeholder: "Data Final"
+                        %>
+                    </div>
+                    <%= text_field_tag :buoy_download, "", class: 'inactive-tab'  %>
+                    <div class="col-sm-12 col-md-3 col-lg-3"> 
+                        <%= submit_tag("ARQUIVO CSV", title: 'Baixar Dados', class: "search w-100 orange-button-search p-2") %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-5 inactive-tab" id='download-format'> 
+            <div class='row justify-content-center'>
+                <div class="col-sm-3 col-md-3 col-lg-3"> 
+                    <div class='search w-100 orange-button-search p-2' id='api-json'
+                    data-apitoken="<%= @user.to_json %>"
+                    data-apiurl="<%= ENV['PNBOIA_API_URI'] %>"
+                    >				
+                    ACESSO API (JSON)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-5" id='text-token'> 
+            <h3>PARA FAZER DOWNLOAD DE DADOS, É NECESSÁRIO GERAR UM TOKEN PARA API</h3>
+        </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-justify pt-5 inactive-tab" id='api-doc'> 
+            <div class='row justify-content-center'>
+                <div class="col-sm-12 col-md-12 col-lg-12"> 
+                    <p class='autentica'>LINK PARA ACESSO A API</p>
+                    <%= text_field_tag :api_url,
+                    params[:api_url],
+                    readonly: true,
+                    class: "form-control input-sm p-0"
+                    %>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-justify pt-5" id='apid'
+            data-pnboia-api-key="<%= ENV['PNBOIA_API_TOKEN'] %>"
+            data-apiurl="<%= ENV['PNBOIA_API_URI'] %>"
+            data-currentuser="<%= current_user.email %>"
+            >
+            <div class='row justify-content-center'>
+                <div class="col-sm-12 col-md-6 col-lg-6"> 
+                    <h3>Autenticação</h3>
+                    <p class='autentica'>Para começar a usar a API do PNBOIA, primeiro gere um token de autenticação,
+                    que lhe dá acesso aos dados coletados pelas boias.
+                    Você deve incluir esse token em um campo de token nos cabeçalhos de solicitação
+                    para todas as solicitações de API. Você pode gerar novamente o token de
+                    autenticação a qualquer momento, mas isso invalidará todos os tokens anteriores.</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6"> 
+                    <%= text_field_tag :api_user_token,
+                    @user,
+                    readonly: true,
+                    class: "form-control input-sm p-0"
+                    %>
+                    <div class="mt-2 mb-2 white-button-small" id='generate-token'>GERAR UM NOVO TOKEN</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

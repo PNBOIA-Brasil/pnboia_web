@@ -1,0 +1,99 @@
+<div class="m-5">
+    <h1 class="font-weight-bold text-center p-3 h1"><%= @buoy.name %></h1>
+    <%= simple_form_for @buoy, html: { class: "results row justify-content-around"} do |f| %>
+        <div class='col-12 col-md-7 mt-5 pt-1'>
+            <%= f.input :buoy_id, label: 'buoy_id' %>
+            <%= f.input :hull_id, label: 'hull_id' %>
+            <%= f.input :name, label: 'name' %>
+            <%= f.input :deploy_date, label: 'deploy_date' %>
+            <%= f.input :latitude, label: 'latitude' %>
+            <%= f.input :longitude, label: 'longitude' %>
+            <%= f.input :status, label: 'status' %>
+            <%= f.input :mode, label: 'mode' %>
+            <%= f.input :wmo_number, label: 'wmo_number' %>
+            <%= f.input :antenna_id, label: 'antenna_id' %>
+            <%= f.input :open_data, label: 'open_data' %>
+            <%= f.input :link_site_pnboia, label: 'link_site_pnboia' %>
+            <%= f.input :project_id, label: 'project_id' %>
+            <%= f.input :manufacturer, label: 'manufacturer' %>
+            <%= f.input :model, label: 'model' %>
+            <%= f.input :diameter, label: 'diameter' %>
+            <%= f.input :weight, label: 'weight' %>
+            <%= f.input :depth, label: 'depth' %>
+            <%= f.input :sensor_description, label: 'sensor_description' %>
+            <%= f.input :working_cycle, label: 'working_cycle' %>
+            <%= f.input :observation, label: 'observation' %>
+            <%= f.button :submit, "Atualizar Equipamento", class: "btn btn-outline-danger m-2"%>
+        </div>
+    <% end %>
+
+    <%= simple_form_for @buoy, :url => add_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+        <%=text_field_tag :type, "profile_picture", class: "inactive-tab"%>
+        <%= f.input :picture, label: "IMAGEM DE PERFIL", as: :file, input_html: { multiple: true }, required: true %>
+        <%= f.button :submit, "ADD", class: "btn btn-outline-danger m-0"%>
+    <% end %>
+    <% @buoy.profile_picture.each_with_index do |picture, idx| %>
+        <%= simple_form_for @buoy, :url => delete_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+            <%=text_field_tag :type, "profile_picture", class: "inactive-tab"%>
+            <%=text_field_tag :file_name, picture, class: "inactive-tab"%>
+            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "nav-img"%>
+            <%= f.button :submit, "X", class: "btn btn-outline-danger m-0", data: { confirm: 'Are you sure?' } %>
+        <% end %>
+    <% end %>
+
+    <%= simple_form_for @buoy, :url => add_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+        <%=text_field_tag :type, "picture", class: "inactive-tab"%>
+        <%= f.input :picture, label: "IMAGENS DA BOIA", as: :file, input_html: { multiple: true }, required: true %>
+        <%= f.button :submit, "ADD", class: "btn btn-outline-danger m-0"%>
+    <% end %>
+    <% @buoy.picture.each_with_index do |picture, idx| %>
+        <%= simple_form_for @buoy, :url => delete_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+            <%=text_field_tag :type, "picture", class: "inactive-tab"%>
+            <%=text_field_tag :file_name, picture, class: "inactive-tab"%>
+            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "nav-img"%>
+            <%= f.button :submit, "X", class: "btn btn-outline-danger m-0", data: { confirm: 'Are you sure?' } %>
+        <% end %>
+    <% end %>
+
+    <%= simple_form_for @buoy, :url => add_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+        <%=text_field_tag :type, "dimension_picture", class: "inactive-tab"%>
+        <%= f.input :picture, label: "DIMENSÕES DA BOIA", as: :file, input_html: { multiple: true }, required: true %>
+        <%= f.button :submit, "ADD", class: "btn btn-outline-danger m-0"%>
+    <% end %>
+    <% @buoy.dimension_picture.each_with_index do |picture, idx| %>
+        <%= simple_form_for @buoy, :url => delete_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+            <%=text_field_tag :type, "dimension_picture", class: "inactive-tab"%>
+            <%=text_field_tag :file_name, picture, class: "inactive-tab"%>
+            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "nav-img"%>
+            <%= f.button :submit, "X", class: "btn btn-outline-danger m-0", data: { confirm: 'Are you sure?' } %>
+        <% end %>
+    <% end %>
+
+    <%= simple_form_for @buoy, :url => add_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+        <%=text_field_tag :type, "mooring_picture", class: "inactive-tab"%>
+        <%= f.input :picture, label: "LINHA DE FUNDEIO", as: :file, input_html: { multiple: true }, required: true %>
+        <%= f.button :submit, "ADD", class: "btn btn-outline-danger m-0"%>
+    <% end %>
+    <% @buoy.mooring_picture.each_with_index do |picture, idx| %>
+        <%= simple_form_for @buoy, :url => delete_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+            <%=text_field_tag :type, "mooring_picture", class: "inactive-tab"%>
+            <%=text_field_tag :file_name, picture, class: "inactive-tab"%>
+            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "nav-img"%>
+            <%= f.button :submit, "X", class: "btn btn-outline-danger m-0", data: { confirm: 'Are you sure?' } %>
+        <% end %>
+    <% end %>
+
+    <%= simple_form_for @buoy, :url => add_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+        <%=text_field_tag :type, "working_cycle_picture", class: "inactive-tab"%>
+        <%= f.input :picture, label: "CICLO DE FUNCIONAMENTO", as: :file, input_html: { multiple: true }, required: true %>
+        <%= f.button :submit, "ADD", class: "btn btn-outline-danger m-0"%>
+    <% end %>
+    <% @buoy.working_cycle_picture.each_with_index do |picture, idx| %>
+        <%= simple_form_for @buoy, :url => delete_image_attachment_buoy_url(@buoy), html: { class: "mt-2"} do |f| %>
+            <%=text_field_tag :type, "working_cycle_picture", class: "inactive-tab"%>
+            <%=text_field_tag :file_name, picture, class: "inactive-tab"%>
+            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "nav-img"%>
+            <%= f.button :submit, "X", class: "btn btn-outline-danger m-0", data: { confirm: 'Are you sure?' } %>
+        <% end %>
+    <% end %>
+</div>

@@ -5,12 +5,12 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= favicon_link_tag asset_path('favicon2.png') %>
+    <%= favicon_link_tag asset_path('logo_pnboia.png') %>
 
-    <meta name="description" content="Dados meteoceanográficos em tempo real na Antártica">
-    <meta property="og:title" content="Boias - Antártica" />
-    <meta property="og:url" content="http://www.operantar.live/" />
-    <meta property="og:description" content="Dados meteoceanográficos em tempo real na Antártica">
+    <meta name="description" content="Programa Nacional de Boias">
+    <meta property="og:title" content="PNBOIA" />
+    <meta property="og:url" content="http://www.pnboia.org" />
+    <meta property="og:description" content="Programa Nacional de Boias">
     <meta property="og:image" content="<%= image_url ('antartica1_old.jpg') %>">
 
     <meta property="og:type" content="website" />
@@ -40,5 +40,6 @@
 
   <body>
     <%= yield %>
+    <%= render 'shared/flashes' %>
   </body>
 </html>

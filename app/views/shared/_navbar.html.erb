@@ -1,6 +1,8 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<div class="navbar nav-bg navbar-expand-sm navbar-light navbar-lewagon">
   <div class="navbar-brand">
-    <%= link_to image_tag("logo_pnboia.png", class: "nav-img p-0"), "https://www.marinha.mil.br/chm/dados-do-goos-brasil/pnboia-mapa", target: :_blank %>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "logo_pnboia.png", class: "nav-img p-0" %>
+    <% end %>
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -9,17 +11,36 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#projetos">PROJETOS</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="#tempo-real">DADOS EM TEMPO REAL</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#graficos">GRÁFICOS</a>
+          <%= link_to pnboia_path, class: "nav-link" do %>
+            PNBOIA
+          <% end %>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/operantarxl">OPERANTAR XL</a>
+          <%= link_to download_path, class: "nav-link" do %>
+            DOWNLOAD
+          <% end %>
         </li>
+        <% if current_user %>
+          <li class="nav-item">
+            <%= link_to admin_path, class: "info-text", title: 'Admin' do %>
+              <i class="fas fa-user"></i>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
+              <i class="fas fa-sign-out-alt"></i>
+            <% end %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to new_user_session_path, class: "nav-link" do %>
+              LOGIN
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_09_212611) do
+ActiveRecord::Schema.define(version: 2023_02_15_205005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2023_02_09_212611) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "buoys", force: :cascade do |t|
+  create_table "buoys", id: false, force: :cascade do |t|
     t.integer "buoy_id"
     t.integer "hull_id"
     t.string "name"
@@ -58,11 +58,12 @@ ActiveRecord::Schema.define(version: 2023_02_09_212611) do
     t.text "sensor_description"
     t.text "working_cycle"
     t.text "observation"
-    t.text "picture"
-    t.text "profile_picture"
-    t.text "dimension_picture"
-    t.text "mooring_picture"
-    t.text "working_cycle_picture"
+    t.text "picture", default: [], array: true
+    t.text "profile_picture", default: [], array: true
+    t.text "dimension_picture", default: [], array: true
+    t.text "mooring_picture", default: [], array: true
+    t.text "working_cycle_picture", default: [], array: true
+    t.index ["buoy_id"], name: "index_buoys_on_buoy_id"
   end
 
   create_table "sites", force: :cascade do |t|
@@ -90,7 +91,11 @@ ActiveRecord::Schema.define(version: 2023_02_09_212611) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "username"
-    t.boolean "admin"
+    t.string "user_type"
+    t.string "authentication_token", limit: 20
+    t.string "institution"
+    t.text "description"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

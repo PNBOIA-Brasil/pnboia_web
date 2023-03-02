@@ -1,0 +1,109 @@
+.img-medium{
+    height: 300px;
+    opacity: 0.5;
+    overflow: hidden;
+}
+
+.sensors-description{
+    font-size: 15px;
+}
+.img-large{
+    height: 400px;
+}
+.banner-title{
+    position: absolute;
+    top: 125px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.position-relative{
+    position: relative;
+}
+
+.front-page-buoy {
+    height: 300px;
+    background-size: cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: black;
+    .img { 
+        height: 100%;
+    }
+
+    h1 {
+        text-shadow: 1px 2px 0px white, -2px 1px 30px white;
+        font-weight: bold;
+        font-size: 60px;
+    }
+
+    p {
+        text-shadow: 2px 2px 0px white, -2px 1px 30px white;
+        font-weight: bold;
+        font-size: 100%;
+    }
+
+    .white-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        height: 60px;
+        width: 140px;
+        border: 4px solid white;
+        font-weight: bold;
+        float:right;
+        margin-right: 10px;
+        border-radius: 5px;
+        text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+        &:hover {
+        background-color: white;
+        color: grey;
+        text-shadow: none;
+        }
+    }
+
+    a {
+        color: white;
+        font-size: 100%;
+    }
+}
+
+.cont {
+    padding-left: 20px;
+    padding-right: 20px;
+    h3{
+        font-size: 22px;
+    }
+}
+
+.tabs-underlined {
+    font-family: "Work Sans", "Helvetica", "sans-serif";
+    display: flex;
+    align-items: center;
+}
+
+.tabs-underlined .tab-underlined {
+    color: black;
+    padding: 8px;
+    margin: 8px 16px;
+    opacity: .4;
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+    border-bottom: 4px solid transparent;
+    &:hover {
+        opacity: 1;
+        border-bottom: 3px solid #555555;
+    }
+}
+
+.tabs-underlined .tab-underlined.active {
+    opacity: 1;
+    border-bottom: 3px solid #555555;
+}

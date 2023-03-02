@@ -27,7 +27,13 @@
   
 }
 
+.navbar-brand{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .nav-item {
+  text-decoration: none;
   a, div {
     color: white !important;;
     font-size: 100%;
@@ -36,7 +42,7 @@
     -webkit-transition: border-bottom 0.75s;
     transition: border-bottom 0.75s;
     &:hover {
-      border-bottom: 1px solid #3FAEFD;
+      border-bottom: 1px solid white;
     }
   }
 

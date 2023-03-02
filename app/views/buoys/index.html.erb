@@ -1,31 +1,27 @@
 <%= render 'shared/navbar' %>
 
 <div class="front-page" style="background-image: url('<%= image_path 'banner.jpg' %>')" id="home">
-  <div class="container banner">
-    <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 text-right">         
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-6 text-right ">
-        <div class="front-page-content1 pb-5">
-        	<h1>PROGRAMA NACIONAL</h1>
-			<h1>DE BOIAS</h1>
-			<p><span id="banner-typed-text"></span></p>
-        </div>
-        <div class="front-page-content3">
-          <a href="#tempo-real">
-            <div class="orange-button">
-              DADOS
-            </div>
-          </a>
-          <a href="#projetos">
-            <div class="white-button">
-              SAIBA MAIS
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container banner">
+		<div class="row">
+			<div class="col-sm-12 col-md-6 col-lg-6 text-right">         
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-6 text-right ">
+				<div class="front-page-content1 pb-5">
+					<h1>PROGRAMA NACIONAL</h1>
+					<h1>DE BOIAS</h1>
+					<p><span id="banner-typed-text"></span></p>
+				</div>
+				<div class="front-page-content3">
+					<a href="#tempo-real">
+						<div class="orange-button">DADOS</div>
+					</a>
+					<%= link_to pnboia_path, class: "" do %>
+						<div class="white-button">SAIBA MAIS</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="tempo-real">
 	<div class="container" id= "tempo-real">
@@ -72,10 +68,10 @@
 										<h3 class='text-right pb-2'>ÚLTIMO DADO:</h3>
 									</div>
 									<div class="col-sm-6 col-md-6 col-lg-6 text-right"> 
-										<h3 class='text-left pt-1'><%= last['buoy']["deploy_date"] %></h3>
+										<h3 class='text-left pt-1'><%= last['buoy']["deploy_date"].to_datetime.strftime("%H:%M %d/%m/%Y") %></h3>
 										<h3 class='text-left'>LAT <%= last['buoy']["latitude"] %>,  LON <%= last['buoy']["longitude"] %></h3>
 										<h3 class='text-left'><%= last['buoy']["mode"] %></h3>
-										<h3 class='text-left pb-2'><%= last['date_time'] %></h3>
+										<h3 class='text-left pb-2'><%= last['date_time'].to_datetime.strftime("%H:%M %d/%m/%Y") %></h3>
 									</div>
 								</div>
 								<div class="row ml-0 mr-0">
@@ -113,9 +109,13 @@
 										<% end %>
 									</div>
 								</div>
-							<a class='' href="#projetos">
-								<div class="mt-2 mb-2 white-button-small">MAIS INFORMAÇÕES E GRÁFICOS</div>
-							</a>
+								<%= link_to buoy_path(last["buoy_id"]), class: "" do %>
+									<div class="mt-2 mb-2 white-button-small">MAIS INFORMAÇÕES E GRÁFICOS</div>
+								<% end %>
+								<%= form_tag download_path, method: :get do %>
+				                    <%= text_field_tag :buoy_download, last['buoy']["buoy_id"], class: 'inactive-tab'  %>
+									<%= submit_tag("BAIXAR DADOS", title: 'Baixar Dados', class: "w-100 mt-2 mb-2 white-button-small") %>
+								<% end %>
 							</div>
 						<% end %>
 					</div>
