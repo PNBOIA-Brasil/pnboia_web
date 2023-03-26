@@ -1,0 +1,30 @@
+<%= render 'shared/navbar' %>
+
+<div class="m-5">
+    <h1 class="font-weight-bold text-center p-3 h1"><%= @buoy.name %></h1>
+    <%= simple_form_for @buoy, html: { class: "results row justify-content-around"} do |f| %>
+        <div class='col-12 col-md-7 mt-5 pt-1'>
+            <%= f.input :hull_id, label: 'hull_id' %>
+            <%= f.input :name, label: 'name' %>
+            <%= f.input :deploy_date, label: 'deploy_date' %>
+            <%= f.input :latitude, label: 'latitude' %>
+            <%= f.input :longitude, label: 'longitude' %>
+            <%= f.input :status, label: 'status' %>
+            <%= f.input :mode, label: 'mode' %>
+            <%= f.input :wmo_number, label: 'wmo_number' %>
+            <%= f.input :antenna_id, label: 'antenna_id' %>
+            <%= f.input :open_data, label: 'open_data' %>
+            <%= f.input :link_site_pnboia, label: 'link_site_pnboia' %>
+            <%= f.input :project_id, label: 'project_id' %>
+            <%= f.input :manufacturer, label: 'manufacturer' %>
+            <%= f.input :model, label: 'model' %>
+            <%= f.input :diameter, label: 'diameter' %>
+            <%= f.input :weight, label: 'weight' %>
+            <%= f.input :depth, label: 'depth' %>
+            <%= f.input :sensor_description, label: 'sensor_description' %>
+            <%= f.input :working_cycle, label: 'working_cycle' %>
+            <%= f.input :observation, label: 'observation' %>
+            <%= f.button :submit, "Criar Boia", class: "btn btn-outline-danger m-2"%>
+        </div>
+    <% end %>
+</div>

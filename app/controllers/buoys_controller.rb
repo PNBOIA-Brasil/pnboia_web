@@ -23,7 +23,13 @@ class BuoysController < ApplicationController
 
   def create
     @buoy = Buoy.new(buoy_params)
-    redirect_to admin_path
+    @buoy.id = Buoy.maximum(:buoy_id) + 1
+    if @buoy.save
+      @buoy = create_buoy(@buoy)
+      redirect_to edit_buoy_path(@buoy)
+    else
+      redirect_to new_path
+    end
   end
 
   def edit
@@ -132,6 +138,37 @@ class BuoysController < ApplicationController
       picture: []
       )
   end
+
+  def create_buoy(buoy)
+    begin
+      buoy_object = create_buoy_object(buoy)
+      url = "/v1/moored/buoys/?token=#{ENV["PNBOIA_API_TOKEN"]}"
+      response = RestClient.post(url, header=buoy_object)
+      return remobs_response['token']
+    rescue
+      return
+    end
+  end
+
+  def create_buoy_object(buoy)
+    buoy_api = {
+      "hull_id": buoy.hull_id,
+      "name": buoy.name,
+      "deploy_date": buoy.deploy_date,
+      "latitude": buoy.latitude,
+      "longitude": buoy.longitude,
+      "status": buoy.status,
+      "mode": buoy.mode,
+      "wmo_number": buoy.wmo_number,
+      "antenna_id": buoy.antenna_id,
+      "open_data": buoy.open_data,
+      "link_site_pnboia": buoy.link_site_pnboia,
+      "project_id": buoy.project_id
+    }
+    return buoy_api
+  end
+
+
 
   def update_buoy(buoy)
     begin

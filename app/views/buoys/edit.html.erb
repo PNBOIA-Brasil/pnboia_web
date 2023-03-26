@@ -1,3 +1,5 @@
+<%= render 'shared/navbar' %>
+
 <div class="m-5">
     <h1 class="font-weight-bold text-center p-3 h1"><%= @buoy.name %></h1>
     <%= simple_form_for @buoy, html: { class: "results row justify-content-around"} do |f| %>
