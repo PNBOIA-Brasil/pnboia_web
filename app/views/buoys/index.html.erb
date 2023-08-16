@@ -1,31 +1,30 @@
 <%= render 'shared/navbar' %>
 
-<div class="front-page" style="background-image: url('<%= image_path 'banner.jpg' %>')" id="home">
-	<div class="container banner">
+<div class="front-page" style="background-image: url('<%= image_path "http://www.pnboia.org/pictures/#{@site.picture.sample}" %>')" id="home">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-6 col-lg-6 text-right">         
 			</div>
 			<div class="col-sm-12 col-md-6 col-lg-6 text-right ">
-				<div class="front-page-content1 pb-5">
+				<div class="pb-3">
 					<h1>PROGRAMA NACIONAL</h1>
 					<h1>DE BOIAS</h1>
 					<p><span id="banner-typed-text"></span></p>
 				</div>
-				<div class="front-page-content3">
-					<a href="#tempo-real">
-						<div class="orange-button">DADOS</div>
-					</a>
-					<%= link_to pnboia_path, class: "" do %>
-						<div class="white-button">SAIBA MAIS</div>
-					<% end %>
-				</div>
+				<a href="#tempo-real">
+					<div class="fill-button">DADOS</div>
+				</a>
+				<%= link_to pnboia_path, class: "" do %>
+					<div class="outline-button">SAIBA MAIS</div>
+				<% end %>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="tempo-real">
+<div class="blue-body">
 	<div class="container" id= "tempo-real">
-		<h2 class="text-center mt-4">DADOS EM TEMPO REAL</h2>
+		<h1 class="text-center mt-4 pr-4 pl-4 pt-4 pb-1">DADOS EM TEMPO REAL</h1>
+		<h2 class="text-center pt-1 pb-2">BOIAS FIXAS</h2>
 		<div id='fixed-buoys'>
 			<div class="row ml-0 mr-0">
 				<div class="col-sm-12 col-md-6 col-lg-6 text-right"> 
@@ -38,21 +37,19 @@
 				<div class="col-sm-12 col-md-6 col-lg-6 text-right"> 
 					<div class="row ml-0 mr-0">
 						<% @lasts.each do |last| %>
-							<div class="col-sm-4 col-md-4 col-lg-4 text-right" id='all-card-small'> 
-								<div class="card-product mt-1 p-0 box boia-<%=last['buoy_id']%>" id='card-small' data-markers="<%= last.to_json %>">
+							<div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+								<div class="card-buoy mt-1 p-0 box boia-<%=last['buoy_id']%>" id='card-small' data-markers="<%= last.to_json %>">
 									<% if last['buoy']['status'] %>
 										<%= image_tag "buoy_green.png"%>
 									<% else %>
 										<%= image_tag "buoy_red.png"%>
 									<% end %>
-									<div class="card-product-infos w-100">
-										<h3 class='text-center'><%= last['buoy']["name"] %></h3>
-									</div>
+									<p class='text-left'><%= last['buoy']["name"] %></p>
 								</div>
 							</div>
-							<div class="card-product-big mt-1 p-0 box inactive-tab boia-<%=last['buoy_id']%>-01" id='card-big'>
+							<div class="card-buoy-big mt-1 p-0 box inactive-tab boia-<%=last['buoy_id']%>-01" id='card-big'>
 								<button class="close-btn"><i class="far fa-times-circle m-0 p-0"></i></button>
-								<div class="card-product-infos w-100">
+								<div class="card-buoy-infos w-100">
 									<h2 class='text-center pb-1 mb-0'><%= last['buoy']["name"] %></h2>
 								</div>
 								<% if last['buoy']['status'] %>
@@ -110,11 +107,113 @@
 									</div>
 								</div>
 								<%= link_to buoy_path(last["buoy_id"]), class: "" do %>
-									<div class="mt-2 mb-2 white-button-small">MAIS INFORMAÇÕES E GRÁFICOS</div>
+									<div class="mt-2 mb-2 outline-button-small">MAIS INFORMAÇÕES E GRÁFICOS</div>
 								<% end %>
 								<%= form_tag download_path, method: :get do %>
 				                    <%= text_field_tag :buoy_download, last['buoy']["buoy_id"], class: 'inactive-tab'  %>
-									<%= submit_tag("BAIXAR DADOS", title: 'Baixar Dados', class: "w-100 mt-2 mb-2 white-button-small") %>
+									<%= submit_tag("BAIXAR DADOS", title: 'Baixar Dados', class: "w-100 mt-2 mb-2 outline-button-small") %>
+								<% end %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mt-5 mb-5 image-strip text-center" style="background-image: url('<%= image_path "http://www.pnboia.org/pictures/#{@site.picture.sample}" %>')" id="fundo">
+			<div class="container reveal">
+					<div class="line"></div>
+			</div>
+	</div>
+	<div class="container" id= "tempo-real">
+		<h2 class="text-center mt-4 p-4">BOIAS DE DERIVA</h2>
+		<div id='fixed-buoys'>
+			<div class="row ml-0 mr-0">
+				<div class="col-sm-12 col-md-6 col-lg-6 text-right"> 
+					<div id="newmap"
+						style="width: 100%; height: 80vh;"
+						data-markers="<%= @lasts.to_json %>"
+						data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6 col-lg-6 text-right"> 
+					<div class="row ml-0 mr-0">
+						<% @lasts.each do |last| %>
+							<div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+								<div class="card-buoy mt-1 p-0 box boia-<%=last['buoy_id']%>" id='card-small' data-markers="<%= last.to_json %>">
+									<% if last['buoy']['status'] %>
+										<%= image_tag "buoy_green.png"%>
+									<% else %>
+										<%= image_tag "buoy_red.png"%>
+									<% end %>
+									<p class='text-left'><%= last['buoy']["name"] %></p>
+								</div>
+							</div>
+							<div class="card-buoy-big mt-1 p-0 box inactive-tab boia-<%=last['buoy_id']%>-01" id='card-big'>
+								<button class="close-btn"><i class="far fa-times-circle m-0 p-0"></i></button>
+								<div class="card-buoy-infos w-100">
+									<h2 class='text-center pb-1 mb-0'><%= last['buoy']["name"] %></h2>
+								</div>
+								<% if last['buoy']['status'] %>
+									<h3 class='text-center bg-success title'>SITUAÇÃO: OPERATIVA</h3>
+								<% else %>
+									<h3 class='text-center bg-danger title'>SITUAÇÃO: INOPERANTE</h3>
+								<% end %>
+								<div class="row ml-0 mr-0">
+									<div class="col-sm-6 col-md-6 col-lg-6 text-right"> 
+										<h3 class='text-right pt-1'>LANÇAMENTO:</h3>
+										<h3 class='text-right'>POSIÇÃO:</h3>
+										<h3 class='text-right'>TIPO:</h3>
+										<h3 class='text-right pb-2'>ÚLTIMO DADO:</h3>
+									</div>
+									<div class="col-sm-6 col-md-6 col-lg-6 text-right"> 
+										<h3 class='text-left pt-1'><%= last['buoy']["deploy_date"].to_datetime.strftime("%H:%M %d/%m/%Y") %></h3>
+										<h3 class='text-left'>LAT <%= last['buoy']["latitude"] %>,  LON <%= last['buoy']["longitude"] %></h3>
+										<h3 class='text-left'><%= last['buoy']["mode"] %></h3>
+										<h3 class='text-left pb-2'><%= last['date_time'].to_datetime.strftime("%H:%M %d/%m/%Y") %></h3>
+									</div>
+								</div>
+								<div class="row ml-0 mr-0">
+									<div class="col-sm-4 col-md-4 col-lg-4 text-right">
+										<h3 class='text-center pt-1 pb-1 title'>ONDAS</h3>
+										<% @waves.each do |key, wave| %>
+											<% if last[key.to_s]%>
+												<div class='d-flex justify-content-between'>
+													<h3 class='text-right'><%=wave[0]%>:</h3>
+													<h3 class='text-left'><%= last[key.to_s] %> <%=wave[1]%></h3>
+												</div>
+											<% end %>
+										<% end %>
+									</div>
+									<div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+										<h3 class='text-center pt-1 pb-1 title'>METEOROLOGIA</h3>
+										<% @meteorologys.each do |key, meteorology| %>
+											<% if last[key.to_s]%>
+												<div class='d-flex justify-content-between'>
+													<h3 class='text-right'><%=meteorology[0]%>:</h3>
+													<h3 class='text-left'><%= last[key.to_s] %> <%=meteorology[1]%></h3>
+												</div>
+											<% end %>
+										<% end %>
+									</div>
+									<div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+										<h3 class='text-center pt-1 pb-1 title'>OCEANOGRAFIA</h3>
+										<% @oceanographys.each do |key, oceanography| %>
+											<% if last[key.to_s]%>
+												<div class='d-flex justify-content-between'>
+													<h3 class='text-right'><%=oceanography[0]%>:</h3>
+													<h3 class='text-left'><%= last[key.to_s] %> <%=oceanography[1]%></h3>
+												</div>
+											<% end %>
+										<% end %>
+									</div>
+								</div>
+								<%= link_to buoy_path(last["buoy_id"]), class: "" do %>
+									<div class="mt-2 mb-2 outline-button-small">MAIS INFORMAÇÕES E GRÁFICOS</div>
+								<% end %>
+								<%= form_tag download_path, method: :get do %>
+				                    <%= text_field_tag :buoy_download, last['buoy']["buoy_id"], class: 'inactive-tab'  %>
+									<%= submit_tag("BAIXAR DADOS", title: 'Baixar Dados', class: "w-100 mt-2 mb-2 outline-button-small") %>
 								<% end %>
 							</div>
 						<% end %>

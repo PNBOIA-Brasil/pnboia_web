@@ -1,0 +1,46 @@
+<%= render 'shared/navbar' %>
+
+<div class="m-5">
+    <h1 class="font-weight-bold text-center p-3 h1">EDITAR SITE</h1>
+    <%= simple_form_for @site, html: { class: "results row justify-content-around"} do |f| %>
+        <div class='col-12 col-md-7 mt-5 pt-1'>
+            <%= f.input :about1, label: 'Sobre1', :input_html => { 'rows' => 10, 'cols' => 10 } %>
+            <%= f.input :about2, label: 'Sobre2', :input_html => { 'rows' => 10, 'cols' => 10 } %>
+            <%= f.input :about3, label: 'Sobre3', :input_html => { 'rows' => 10, 'cols' => 10 } %>
+            <%= f.input :history, label: 'Historico', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :institution, label: 'Instituicoes Participantes', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :goal, label: 'Objetivos', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :problem, label: 'Problemas', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :observation, label: 'Observacoes', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.button :submit, "Atualizar Site", class: "btn btn-outline-danger m-2"%>
+        </div>
+    <% end %>
+
+    <%= simple_form_for @site, :url => add_image_attachment_site_url(@site), html: { class: "mt-2"} do |f| %>
+        <%=text_field_tag :type, "picture", class: "inactive-tab"%>
+        <%= f.input :picture, label: "IMAGEM CAPA DO SITE", as: :file, input_html: { multiple: true }, required: true %>
+        <%= f.button :submit, "ADD", class: "btn btn-outline-danger m-0"%>
+    <% end %>
+    <% @site.picture.each_with_index do |picture, idx| %>
+        <%= simple_form_for @site, :url => delete_image_attachment_site_url(@site), html: { class: "mt-2"} do |f| %>
+            <%=text_field_tag :type, "picture", class: "inactive-tab"%>
+            <%=text_field_tag :file_name, picture, class: "inactive-tab"%>
+            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "nav-img"%>
+            <%= f.button :submit, "X", class: "btn btn-outline-danger m-0", data: { confirm: 'Are you sure?' } %>
+        <% end %>
+    <% end %>
+
+    <%= simple_form_for @site, :url => add_image_attachment_site_url(@site), html: { class: "mt-2"} do |f| %>
+        <%=text_field_tag :type, "other_picture", class: "inactive-tab"%>
+        <%= f.input :picture, label: "OUTRAS IMAGENS DO SITE", as: :file, input_html: { multiple: true }, required: true %>
+        <%= f.button :submit, "ADD", class: "btn btn-outline-danger m-0"%>
+    <% end %>
+    <% @site.other_picture.each_with_index do |picture, idx| %>
+        <%= simple_form_for @site, :url => delete_image_attachment_site_url(@site), html: { class: "mt-2"} do |f| %>
+            <%=text_field_tag :type, "other_picture", class: "inactive-tab"%>
+            <%=text_field_tag :file_name, picture, class: "inactive-tab"%>
+            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "nav-img"%>
+            <%= f.button :submit, "X", class: "btn btn-outline-danger m-0", data: { confirm: 'Are you sure?' } %>
+        <% end %>
+    <% end %>
+</div>

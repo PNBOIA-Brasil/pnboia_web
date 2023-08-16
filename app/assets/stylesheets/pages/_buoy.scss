@@ -1,82 +1,73 @@
 .img-medium{
-    height: 300px;
-    opacity: 0.5;
+    height: 25rem;
+    max-height: 25rem;
+    width: 100%;
+    opacity: 1;
     overflow: hidden;
+    margin-left: 50%;
+    transform: translatex(-50%);
 }
 
-.sensors-description{
-    font-size: 15px;
+.img-small{
+    width: 8rem;
+    height: 100%;
+    opacity: 1;
 }
+
+
+.sensors-description{
+    h1{
+        font-size: 2rem !important;
+        font-weight: bold;
+    }
+    h2{
+        font-size: 1.75rem !important;
+        font-weight: bold;
+    }
+
+    h3{
+        font-size: 1.5rem !important;
+        font-weight: bold;
+    }
+    p{
+        font-size: 1.25rem !important;
+    }
+}
+
 .img-large{
-    height: 400px;
+    height: 25rem;
 }
 .banner-title{
     position: absolute;
-    top: 125px;
+    top: 10rem;
     left: 50%;
     transform: translate(-50%, 0);
     margin-left: auto; 
     margin-right: auto; 
 }
 
-.position-relative{
-    position: relative;
-}
-
 .front-page-buoy {
-    height: 300px;
+    // box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    height: 25rem;
     background-size: cover;
-
+    // background: $blue-0;
     display: flex;
     align-items: center;
     justify-content: center;
 
     color: black;
-    .img { 
-        height: 100%;
-    }
 
     h1 {
         text-shadow: 1px 2px 0px white, -2px 1px 30px white;
         font-weight: bold;
-        font-size: 60px;
-    }
-
-    p {
-        text-shadow: 2px 2px 0px white, -2px 1px 30px white;
-        font-weight: bold;
-        font-size: 100%;
-    }
-
-    .white-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        height: 60px;
-        width: 140px;
-        border: 4px solid white;
-        font-weight: bold;
-        float:right;
-        margin-right: 10px;
-        border-radius: 5px;
-        text-shadow: 0px 0px 8px black, 1px 0px 2px white;
-        &:hover {
-        background-color: white;
-        color: grey;
-        text-shadow: none;
-        }
-    }
-
-    a {
-        color: white;
-        font-size: 100%;
+        font-size: 3.75rem;
     }
 }
 
 .cont {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-top: 1.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
     h3{
         font-size: 22px;
     }
@@ -86,6 +77,9 @@
     font-family: "Work Sans", "Helvetica", "sans-serif";
     display: flex;
     align-items: center;
+    box-shadow: 0 5px 4px rgba(0,0,0,0.4);
+
+    // background: $blue-0;
 }
 
 .tabs-underlined .tab-underlined {

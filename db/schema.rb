@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_15_205005) do
+ActiveRecord::Schema.define(version: 2023_06_26_190047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,11 +63,23 @@ ActiveRecord::Schema.define(version: 2023_02_15_205005) do
     t.text "dimension_picture", default: [], array: true
     t.text "mooring_picture", default: [], array: true
     t.text "working_cycle_picture", default: [], array: true
+    t.text "dimension_description"
+    t.text "mooring_description"
     t.index ["buoy_id"], name: "index_buoys_on_buoy_id"
   end
 
+  create_table "news", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.string "text"
+    t.string "picture_legend"
+    t.string "picture", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sites", force: :cascade do |t|
-    t.text "about"
+    t.text "about1"
     t.text "history"
     t.text "institution"
     t.text "goal"
@@ -75,11 +87,14 @@ ActiveRecord::Schema.define(version: 2023_02_15_205005) do
     t.text "observation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "picture"
-    t.text "quality_control_file"
-    t.text "vandalism_file"
-    t.text "article_file"
-    t.text "pnt_file"
+    t.text "picture", default: [], array: true
+    t.text "quality_control_file", default: [], array: true
+    t.text "vandalism_file", default: [], array: true
+    t.text "article_file", default: [], array: true
+    t.text "pnt_file", default: [], array: true
+    t.text "other_picture", default: [], array: true
+    t.text "about2"
+    t.text "about3"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,14 +1,14 @@
 require "open-uri"
 
-User.destroy_all
+# User.destroy_all
 
 
-u = User.new(
-  email: "vanessabach.r@gmail.com",
-  username: "pesquisadores",
-  password: "operantar",
-  admin: false
-)
+# u = User.new(
+#   email: "vanessabach.r@gmail.com",
+#   username: "pesquisadores",
+#   password: "operantar",
+#   admin: false
+# )
 
 
 Buoy.destroy_all

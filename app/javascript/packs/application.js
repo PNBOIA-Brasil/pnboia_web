@@ -28,6 +28,7 @@ import { initMapbox, initMapboxNew, initMapboxDrifter, initMapboxSofar } from '.
 import { initPlotly, updatePlotly } from '../plugins/init_plotly';
 import { initPopup } from '../plugins/init_popup';
 import { upToken, initTab, initTabGraph, initTabBuoy, initTabDownload, initTabApi, newLink } from '../plugins/init_tab';
+import { initSlider } from '../plugins/init_slider';
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
@@ -53,4 +54,6 @@ document.addEventListener('turbolinks:load', () => {
   initTabApi();
   newLink();
   upToken();
+  initSlider();
+
 })

@@ -8,7 +8,7 @@ const initTabDownload = () => {
     const updateButtonsDownload = (smallButton) => {
         const apiDoc = document.getElementById('api-doc')
         apiDoc.classList.add('inactive-tab');    
-        smallButton.classList.add('active10');
+        smallButton.classList.add('active-buoy-button');
         const dateDownload = document.getElementById('date-download');
         dateDownload.classList.remove('inactive-tab');
         const formatDownload = document.getElementById('download-format');
@@ -41,7 +41,7 @@ const initTabDownload = () => {
 
     if (smallButtons) {
 		smallButtons.forEach((smallButton) => {
-            if (smallButton.classList.contains('active10')){
+            if (smallButton.classList.contains('active-buoy-button')){
                 updateButtonsDownload(smallButton)
             } else {
                 const apiToken = document.getElementById('api_user_token');
@@ -52,7 +52,7 @@ const initTabDownload = () => {
             }
             smallButton.addEventListener('click', (event) => {
                 smallButtons.forEach((card) => {
-                    card.classList.remove('active10');
+                    card.classList.remove('active-buoy-button');
                 });
                 updateButtonsDownload(smallButton)
             });

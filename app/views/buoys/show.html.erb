@@ -1,18 +1,20 @@
 <%= render 'shared/navbar' %>
 <%= render 'shared/loader' %>
 
-<div class='front-page-buoy banner d-flex position-relative'>
-  <div class="row w-100">
+<div class='front-page-buoy banner d-flex'>
+  <div class="row w-100 justify-content-center">
     <% count = 0 %>
     <% picture_size = @buoy.picture.size %>
     <% 3.times do  %>
       <% if picture_size == 0 %>
-        <%= image_tag "logo_pnboia.png", class: "img-medium" %>
+        <div class="col-4 m-0 p-0">
+          <%= image_tag "logo_pnboia.png", class: "img-medium" %>
+        </div>
       <% else %>
         <% if count >= picture_size %>
           <% count = 0 %>
         <% end  %>
-        <div class="col-4 m-0 p-0 position-relative">
+        <div class="col-4 m-0 p-0">
           <%= image_tag "http://www.pnboia.org/pictures/#{@buoy.picture[count]}", class: "img-medium" %>
         </div>
         <% count += 1 %>
@@ -21,8 +23,8 @@
     <h1 class='banner-title'><%= @buoy.name %></h1>
   </div>
 </div>
-<div class="cont">
-  <ul class="list-inline tabs-underlined w-100 justify-content-between">
+<div class='w-100'>
+  <ul class="list-inline tabs-underlined pt-3 w-100 justify-content-between">
     <li>
       <p class="tab-underlined active buoy-tabs" id="tab1">DADOS</p>
     </li>
@@ -36,256 +38,267 @@
       <p class="tab-underlined buoy-tabs" id="tab4">MAIS INFORMAÇÕES</p>
     </li>
   </ul>
-  <div id="show1" class='buoy-shows container'>
-    <div class='row'>
-      <div class="col-sm-3 col-md-3 col-lg-3"> 
-        <p  class='m-0 p-0 letter-date'>Data Inicial:</p>
-        <%= date_field_tag :start_date,
-          params[:start_date],
-          class: "form-control input-sm p-0",
-          placeholder: "Data Inicial",
-          value: @start_date.strftime("%Y-%m-%d")
-        %>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3"> 
-        <p class='m-0 p-0  letter-date'>Data Final:</p>
-        <%= date_field_tag :end_date,
-          params[:end_date],
-          class: "form-control input-sm p-0",
-          placeholder: "Data Final",
-          value: @end_date.strftime("%Y-%m-%d")
-        %>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3"> 
-        <p class='m-0 p-0  letter-date'>FILTRO:</p>
-        <%= select_tag :flag, raw("<option>TODOS OS DADOS</option><option>RETIRAR DADOS RUINS E SUSPEITOS</option><option>RETIRAR SOMENTE DADOS RUINS</option>"),
-          class: "form-control input-sm p-0"
-        %>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3"> 
-        <div class='search w-100 orange-button-search p-2'>				
-          FILTRAR
+  <div class="cont">
+    <div id="show1" class='buoy-shows container'>
+      <div class='row'>
+        <div class="col-sm-3 col-md-3 col-lg-3"> 
+          <p  class='m-0 p-0 letter-date'>Data Inicial:</p>
+          <%= date_field_tag :start_date,
+            params[:start_date],
+            class: "form-control input-sm p-0",
+            placeholder: "Data Inicial",
+            value: @start_date.strftime("%Y-%m-%d")
+          %>
         </div>
-      </div>
-      <div class="col-sm-12 col-md-12 col-lg-12 pt-2"> 
-        <%= link_to download_path, class: "" do %>
-          <div class='search w-100 orange-button-search p-2'>				
-          BAIXAR DADOS
+        <div class="col-sm-3 col-md-3 col-lg-3"> 
+          <p class='m-0 p-0  letter-date'>Data Final:</p>
+          <%= date_field_tag :end_date,
+            params[:end_date],
+            class: "form-control input-sm p-0",
+            placeholder: "Data Final",
+            value: @end_date.strftime("%Y-%m-%d")
+          %>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3"> 
+          <p class='m-0 p-0  letter-date'>FILTRO:</p>
+          <%= select_tag :flag, raw("<option>TODOS OS DADOS</option><option>RETIRAR DADOS RUINS E SUSPEITOS</option><option>RETIRAR SOMENTE DADOS RUINS</option>"),
+            class: "form-control input-sm p-0"
+          %>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3"> 
+          <div class='search w-100 outline-button button-search p-2'>				
+            FILTRAR
           </div>
-        <% end %>
-      </div>
-    </div>
-    <div id="plotdata"
-      data-station="<%= @buoy.to_json %>"
-      data-waves="<%= @waves.to_json %>"
-      data-oceanographys="<%= @meteorologys.to_json %>"
-      data-meteorologys="<%= @oceanographys.to_json %>"
-      data-pnboia-api-key="<%= ENV['PNBOIA_API_TOKEN'] %>"
-      >
-      <div class='row pt-3'>
-        <div class="col-4 m-0 pt-0 pb-0 pl-1 pr-1">
-          <div class="mt-2 mb-2 white-button-tab active btn-graphs" id='btn-meteorology'>METEOROLOGIA</div>
         </div>
-        <div class="col-4 m-0 pt-0 pb-0 pl-1 pr-1">
-          <div class="mt-2 mb-2 white-button-tab btn-graphs" id='btn-oceanography'>OCEANOGRAFIA</div>
-        </div>
-        <div class="col-4 m-0 pt-0 pb-0 pl-1 pr-1">
-          <div class="mt-2 mb-2 white-button-tab btn-graphs" id='btn-wave'>ONDAS</div>
+        <div class="col-sm-12 col-md-12 col-lg-12 pt-2"> 
+          <%= link_to download_path, class: "" do %>
+            <div class='search w-100 outline-button button-search p-2'>
+            BAIXAR DADOS
+            </div>
+          <% end %>
         </div>
       </div>
+      <div id="plotdata"
+        data-station="<%= @buoy.to_json %>"
+        data-waves="<%= @waves.to_json %>"
+        data-oceanographys="<%= @meteorologys.to_json %>"
+        data-meteorologys="<%= @oceanographys.to_json %>"
+        data-pnboia-api-key="<%= ENV['PNBOIA_API_TOKEN'] %>"
+        >
+        <div class='row pt-3'>
+          <div class="col-4 m-0 pt-0 pb-0 pl-1 pr-1">
+            <div class="mt-2 mb-2 white-button-tab active btn-graphs" id='btn-meteorology'>METEOROLOGIA</div>
+          </div>
+          <div class="col-4 m-0 pt-0 pb-0 pl-1 pr-1">
+            <div class="mt-2 mb-2 white-button-tab btn-graphs" id='btn-oceanography'>OCEANOGRAFIA</div>
+          </div>
+          <div class="col-4 m-0 pt-0 pb-0 pl-1 pr-1">
+            <div class="mt-2 mb-2 white-button-tab btn-graphs" id='btn-wave'>ONDAS</div>
+          </div>
+        </div>
 
-      <div id='plot-meteorology' class='show-graphs'>
-        <div id="wspd1-plot" class='graph'></div>
-        <div id="gust1-plot" class='graph'></div>
-        <div id="wdir1-plot" class='graph'></div>
-        <div id="wdir1g-plot" class='graph'></div>
-        <div id="wspd2-plot" class='graph'></div>
-        <div id="gust2-plot" class='graph'></div>
-        <div id="wdir2-plot" class='graph'></div>
-        <div id="wdir2g-plot" class='graph'></div>
-        <div id="atmp-plot" class='graph'></div>
-        <div id="pres-plot" class='graph'></div>
-        <div id="rh-plot" class='graph'></div>
-        <div id="dewpt-plot" class='graph'></div>
-        <div id="srad-plot" class='graph'></div>
-      </div>
+        <div id='plot-meteorology' class='show-graphs'>
+          <div id="wspd1-plot" class='graph'></div>
+          <div id="gust1-plot" class='graph'></div>
+          <div id="wdir1-plot" class='graph'></div>
+          <div id="wdir1g-plot" class='graph'></div>
+          <div id="wspd2-plot" class='graph'></div>
+          <div id="gust2-plot" class='graph'></div>
+          <div id="wdir2-plot" class='graph'></div>
+          <div id="wdir2g-plot" class='graph'></div>
+          <div id="atmp-plot" class='graph'></div>
+          <div id="pres-plot" class='graph'></div>
+          <div id="rh-plot" class='graph'></div>
+          <div id="dewpt-plot" class='graph'></div>
+          <div id="srad-plot" class='graph'></div>
+        </div>
 
-      <div id='plot-oceanography' class='show-graphs'>
-        <div id="sst-plot" class='graph'></div>
-        <% count = 1 %>
-        <% 20.times %>
-        <% count = 1 %>
-        <% 20.times do  %>
-          <div id="cspd<%= count %>-plot" class='graph'></div>
-          <div id="cdir<%= count %>-plot" class='graph'></div>
-          <div id="cdir<%= count %>g-plot" class='graph'></div>
-          <% count += 1 %>
-        <% end %>    
-      </div>
-      <div id='plot-wave' class='show-graphs'>
-        <div id="swvht1-plot" class='graph'></div>
-        <div id="mxwvht1-plot" class='graph'></div>
-        <div id="tp1-plot" class='graph'></div>
-        <div id="tm1-plot" class='graph'></div>
-        <div id="wvdir1-plot" class='graph'></div>
-        <div id="wvdir1g-plot" class='graph'></div>
-        <div id="pkdir1-plot" class='graph'></div>
-        <div id="pkdir1g-plot" class='graph'></div>
-        <div id="wvspread1-plot" class='graph'></div>
-        <div id="pkspread1-plot" class='graph'></div>
-        <div id="swvht2-plot" class='graph'></div>
-        <div id="tp2-plot" class='graph'></div>
-        <div id="wvdir2-plot" class='graph'></div>
-        <div id="wvdir2g-plot" class='graph'></div>
-      </div>
-    </div>
-  </div>
-  <div id='show2' class='container buoy-shows inactive-tab'>
-    <div class="row justify-content-between">
-      <div class="col-5 m-0 p-0">
-        <%= image_tag "http://www.pnboia.org/pictures/#{@buoy.profile_picture[0]}", class: "img-large" %>
-      </div>
-      <div class="col-7 m-0 p-0">
-        <% if @last['buoy']['status'] %>
-          <h3 class='text-center bg-success title'>SITUAÇÃO: OPERATIVA</h3>
-        <% else %>
-          <h3 class='text-center bg-danger title'>SITUAÇÃO: INOPERANTE</h3>
-        <% end %>
-        <div class="row ml-0 mr-0">
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right pt-1'>LANÇAMENTO:</h3>
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'><%= @buoy.deploy_date %></h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>POSIÇÃO:</h3>
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left'>LAT <%= @buoy.latitude %>°,  LON <%= @buoy.longitude %>°</h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>FABRICANTE:</h3>
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'><%= @buoy.manufacturer %></h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>MODELO:</h3>
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'><%= @buoy.model %></h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>DIÂMETRO:</h3>
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'><%= @buoy.diameter %> m</h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>PESO:</h3>
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'><%= @buoy.weight %> kg</h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>PROFUNDIDADE:</h3>          
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'><%= @buoy.depth %> m</h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>ÚLTIMO DADO:</h3>          
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'> <%= @last['date_time'].to_datetime.strftime("%H:%M %d/%m/%Y") %></h3>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
-            <h3 class='text-right'>BATERIA:</h3>          
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
-            <h3 class='text-left pt-1'> <%= @last['battery'] %> V</h3>
-          </div>
+        <div id='plot-oceanography' class='show-graphs'>
+          <div id="sst-plot" class='graph'></div>
+          <% count = 1 %>
+          <% 20.times %>
+          <% count = 1 %>
+          <% 20.times do  %>
+            <div id="cspd<%= count %>-plot" class='graph'></div>
+            <div id="cdir<%= count %>-plot" class='graph'></div>
+            <div id="cdir<%= count %>g-plot" class='graph'></div>
+            <% count += 1 %>
+          <% end %>    
+        </div>
+        <div id='plot-wave' class='show-graphs'>
+          <div id="swvht1-plot" class='graph'></div>
+          <div id="mxwvht1-plot" class='graph'></div>
+          <div id="tp1-plot" class='graph'></div>
+          <div id="tm1-plot" class='graph'></div>
+          <div id="wvdir1-plot" class='graph'></div>
+          <div id="wvdir1g-plot" class='graph'></div>
+          <div id="pkdir1-plot" class='graph'></div>
+          <div id="pkdir1g-plot" class='graph'></div>
+          <div id="wvspread1-plot" class='graph'></div>
+          <div id="pkspread1-plot" class='graph'></div>
+          <div id="swvht2-plot" class='graph'></div>
+          <div id="tp2-plot" class='graph'></div>
+          <div id="wvdir2-plot" class='graph'></div>
+          <div id="wvdir2g-plot" class='graph'></div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-5">
-        <h2 class='text-center title font-weight-bold'>ÚLTIMOS DADOS</h3>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3 text-right pt-5">
-        <h3 class='text-center pt-1 pb-1 title'>ONDAS</h3>
-        <% @waves.each do |key, wave| %>
-          <% if @last[key.to_s]%>
-            <div class='d-flex justify-content-between'>
-              <h3 class='text-right'><%=wave[0]%>:</h3>
-              <h3 class='text-left'><%= @last[key.to_s] %> <%=wave[1]%></h3>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3 text-right pt-5"> 
-        <h3 class='text-center pt-1 pb-1 title'>METEOROLOGIA</h3>
-        <% @meteorologys.each do |key, meteorology| %>
-          <% if @last[key.to_s]%>
-            <div class='d-flex justify-content-between'>
-              <h3 class='text-right'><%=meteorology[0]%>:</h3>
-              <h3 class='text-left'><%= @last[key.to_s] %> <%=meteorology[1]%></h3>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3 text-right pt-5"> 
-        <h3 class='text-center pt-1 pb-1 title'>OCEANOGRAFIA</h3>
-        <% @oceanographys.each do |key, oceanography| %>
-          <% if @last[key.to_s]%>
-            <div class='d-flex justify-content-between'>
-              <h3 class='text-right'><%=oceanography[0]%>:</h3>
-              <h3 class='text-left'><%= @last[key.to_s] %> <%=oceanography[1]%></h3>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
     </div>
-  </div>
-  <div id="show3" class='buoy-shows container inactive-tab'>
-    <div class="row ml-0 mr-0">
-      <div class="col-sm-12 col-md-12 col-lg-12 pt-5 text-center">
-        <h2 class='text-center title font-weight-bold'>SENSORES</h3>
-        <div class="text-justify sensors-description">
-          <%= sanitize @buoy.sensor_description  %>
+    <div id='show2' class='container buoy-shows inactive-tab'>
+      <div class="row justify-content-between">
+        <div class="col-5 m-0 p-0">
+          <%= image_tag "http://www.pnboia.org/pictures/#{@buoy.profile_picture[0]}", class: "img-large" %>
+        </div>
+        <div class="col-7 m-0 p-0">
+          <% if @last['buoy']['status'] %>
+            <h3 class='text-center bg-success title'>SITUAÇÃO: OPERATIVA</h3>
+          <% else %>
+            <h3 class='text-center bg-danger title'>SITUAÇÃO: INOPERANTE</h3>
+          <% end %>
+          <div class="row ml-0 mr-0">
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right pt-1'>LANÇAMENTO:</h3>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'><%= @buoy.deploy_date %></h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>POSIÇÃO:</h3>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left'>LAT <%= @buoy.latitude %>°,  LON <%= @buoy.longitude %>°</h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>FABRICANTE:</h3>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'><%= @buoy.manufacturer %></h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>MODELO:</h3>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'><%= @buoy.model %></h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>DIÂMETRO:</h3>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'><%= @buoy.diameter %> m</h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>PESO:</h3>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'><%= @buoy.weight %> kg</h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>PROFUNDIDADE:</h3>          
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'><%= @buoy.depth %> m</h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>ÚLTIMO DADO:</h3>          
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'> <%= @last['date_time'].to_datetime.strftime("%H:%M %d/%m/%Y") %></h3>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 text-right"> 
+              <h3 class='text-right'>BATERIA:</h3>          
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8 text-right"> 
+              <h3 class='text-left pt-1'> <%= @last['battery'] %> V</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right pt-5">
+          <h2 class='text-center title font-weight-bold'>ÚLTIMOS DADOS</h3>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 text-right pt-5">
+          <h3 class='text-center pt-1 pb-1 title'>ONDAS</h3>
+          <% @waves.each do |key, wave| %>
+            <% if @last[key.to_s]%>
+              <div class='d-flex justify-content-between'>
+                <h3 class='text-right'><%=wave[0]%>:</h3>
+                <h3 class='text-left'><%= @last[key.to_s] %> <%=wave[1]%></h3>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 text-right pt-5"> 
+          <h3 class='text-center pt-1 pb-1 title'>METEOROLOGIA</h3>
+          <% @meteorologys.each do |key, meteorology| %>
+            <% if @last[key.to_s]%>
+              <div class='d-flex justify-content-between'>
+                <h3 class='text-right'><%=meteorology[0]%>:</h3>
+                <h3 class='text-left'><%= @last[key.to_s] %> <%=meteorology[1]%></h3>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 text-right pt-5"> 
+          <h3 class='text-center pt-1 pb-1 title'>OCEANOGRAFIA</h3>
+          <% @oceanographys.each do |key, oceanography| %>
+            <% if @last[key.to_s]%>
+              <div class='d-flex justify-content-between'>
+                <h3 class='text-right'><%=oceanography[0]%>:</h3>
+                <h3 class='text-left'><%= @last[key.to_s] %> <%=oceanography[1]%></h3>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       </div>
-      <% if !@buoy.working_cycle_picture.empty? %>
+    </div>
+    <div id="show3" class='buoy-shows container inactive-tab'>
+      <div class="row ml-0 mr-0">
         <div class="col-sm-12 col-md-12 col-lg-12 pt-5 text-center">
-          <h2 class='text-center title font-weight-bold'>CICLO DE FUNCIONAMENTO</h3>
+          <h2 class='text-center title font-weight-bold pb-5'>SENSORES</h3>
+          <div class="text-justify sensors-description">
+            <%= markdown(@buoy.sensor_description) %>
+          </div>
+        </div>
+        <% if !@buoy.working_cycle_picture.empty? %>
+          <div class="col-sm-12 col-md-12 col-lg-12 pt-5 text-center">
+            <h2 class='text-center title font-weight-bold pb-5'>CICLO DE FUNCIONAMENTO</h3>
+            <div class="text-justify sensors-description">
+              <%= markdown(@buoy.working_cycle) %>
+            </div>
+            <div class="d-flex justify-content-center">
+              <% @buoy.working_cycle_picture.each do |picture| %>
+                <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "img-large" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="show4" class='buoy-shows container inactive-tab'>
+      <div class="row ml-0 mr-0">
+        <div class="col-sm-12 col-md-12 col-lg-12 pt-5 text-center">
+          <h2 class='text-center title font-weight-bold pb-5'>DIMENSÕES</h3>
+          <div class="text-justify sensors-description">
+            <%= markdown(@buoy.dimension_description) %>
+          </div>
           <div class="d-flex justify-content-center">
-            <% @buoy.working_cycle_picture.each do |picture| %>
+            <% @buoy.dimension_picture.each do |picture| %>
               <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "img-large" %>
             <% end %>
           </div>
         </div>
-      <% end %>
-    </div>
-  </div>
-  <div id="show4" class='buoy-shows container inactive-tab'>
-    <div class="row ml-0 mr-0">
-      <div class="col-sm-12 col-md-12 col-lg-12 pt-5 text-center">
-        <h2 class='text-center title font-weight-bold'>DIMENSÕES</h3>
-        <div class="d-flex justify-content-center">
-          <% @buoy.dimension_picture.each do |picture| %>
-            <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "img-large" %>
-          <% end %>
-        </div>
-      </div>
-      <% if !@buoy.mooring_picture.empty? %>
-        <div class="col-sm-12 col-md-12 col-lg-12 pt-5 text-center">
-          <h2 class='text-center title font-weight-bold'>SISTEMA DE FUNDEIO</h3>
-          <div class="d-flex justify-content-center">
-            <% @buoy.mooring_picture.each do |picture| %>
-              <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "img-large" %>
-            <% end %>
+        <% if !@buoy.mooring_picture.empty? %>
+          <div class="col-sm-12 col-md-12 col-lg-12 pt-5 text-center">
+            <h2 class='text-center title font-weight-bold pb-5'>SISTEMA DE FUNDEIO</h3>
+            <div class="text-justify sensors-description">
+              <%= markdown(@buoy.mooring_description) %>
+            </div>
+            <div class="d-flex justify-content-center">
+              <% @buoy.mooring_picture.each do |picture| %>
+                <%= image_tag "http://www.pnboia.org/pictures/#{picture}", class: "img-large" %>
+              <% end %>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

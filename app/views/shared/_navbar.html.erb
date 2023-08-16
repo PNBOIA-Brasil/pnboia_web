@@ -11,21 +11,44 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#tempo-real">DADOS EM TEMPO REAL</a>
+          <div class="dropdown">
+            <div class="nav-link dropbtn">DADOS EM TEMPO REAL
+              <%# <i class="fa fa-caret-down"></i> %>
+            </div>
+            <div class="dropdown-content">
+              <a href="#tempo-real">BOIAS FIXAS</a>
+              <a href="#">BOIAS DE DERIVA</a>
+            </div>
+          </div>
         </li>
         <li class="nav-item">
-          <%= link_to pnboia_path, class: "nav-link" do %>
-            PNBOIA
-          <% end %>
+          <div class="dropdown">
+            <%= link_to pnboia_path, class: "nav-link dropbtn" do %>
+              PNBOIA
+            <% end %>
+            <div class="dropdown-content">
+              <a href="#tempo-real">PNBOIA</a>
+              <a href="#tempo-real">OBJETIVOS</a>
+              <a href="#tempo-real">HISTORICO</a>
+              <a href="#tempo-real">PROBLEMAS</a>
+              <a href="#tempo-real">OBSERVACOES</a>
+              <a href="#tempo-real">DOCUMENTACAO</a>
+            </div>
+          </div>
         </li>
         <li class="nav-item">
           <%= link_to download_path, class: "nav-link" do %>
             DOWNLOAD
           <% end %>
         </li>
+        <li class="nav-item">
+          <%= link_to download_path, class: "nav-link" do %>
+            NOTICIAS
+          <% end %>
+        </li>
         <% if current_user %>
           <li class="nav-item">
-            <%= link_to admin_path, class: "info-text", title: 'Admin' do %>
+            <%= link_to admin_path, class: "nav-link", title: 'Admin' do %>
               <i class="fas fa-user"></i>
             <% end %>
           </li>

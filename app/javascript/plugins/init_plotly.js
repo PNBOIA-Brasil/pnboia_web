@@ -2,7 +2,7 @@ import Plotly from 'plotly.js-dist';
 import { getDataStation } from '../plugins/get_data';
 
 const updatePlotly = () => {
-	const searchBtn = document.querySelector('.orange-button-search')
+	const searchBtn = document.querySelector('.button-search')
 	
 	if (searchBtn) {
 		searchBtn.addEventListener('click', (event) => {

@@ -1,0 +1,112 @@
+<%= render 'shared/navbar' %>
+<div class="front-page-pnboia" style="background-image: url('<%= image_path "http://www.pnboia.org/pictures/#{@site.picture.sample}" %>')" id="home">
+	<div class="container banner">
+        <h1 class='banner-title'>PROGRAMA NACIONAL DE BOIAS</h1>
+	</div>
+</div>
+<div class="blue-body">
+    <div class='container-pnboia'>
+        <h1 class='text-center title font-weight-bold p-3'>PNBOIA</h1>
+		<div class="row align-items-center">
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
+				<div class= "text-align-center ">
+					<%= image_tag "http://www.pnboia.org/pictures/#{@site.other_picture[0]}", class:'img-medium' %>
+				</div>			
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
+                <%= markdown(@site.about1) %>
+			</div>			
+		</div>
+		<div class="row align-items-center mt-2">
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
+                <%= markdown(@site.about2) %>
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
+				<div class= "card-project text-align-center">
+					<%= image_tag "http://www.pnboia.org/pictures/#{@site.other_picture[1]}", class:'img-medium'%>
+				</div>	
+			</div>			
+		</div>
+		<div class="row align-items-center mt-2">
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
+				<div class= "card-project text-align-center">
+					<%= image_tag "http://www.pnboia.org/pictures/#{@site.other_picture[2]}", class:'img-medium' %>
+				</div>	
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
+                <%= markdown(@site.about3) %>
+			</div>
+		</div>
+    </div>
+    <div class='container container-pnboia'>
+        <h1 class='text-center title font-weight-bold p-6 pnboia-title'>OBJETIVOS</h1>
+        <div class='pnboia-texts'>
+            <%= markdown(@site.goal) %>
+        </div>
+        <div>
+            <h2 class='text-center title font-weight-bold p-2 pnboia-title'>INSTITUICOES PARTICIPANTES</h1>
+            <div class='d-flex justify-content-around text-center'>
+                <p><strong>CHM</strong></p>
+                <p><strong>SECIRM</strong></p>
+                <p><strong>IEAPM</strong></p>
+                <p><strong>PETROBRAS</strong></p>
+            </div>
+            <div class='d-flex justify-content-around'>
+                <img class='img-small' src="https://idem.dhn.mar.mil.br/static/media/chm.d9c543ab8d9665a88bd5.png"/>
+                <img class='img-small' src="https://www.marinha.mil.br/secirm/sites/www.marinha.mil.br.secirm/files/pictures/brasaoSECIRMfundotransparente.png">
+                <img class='img-small' src="https://www.marinha.mil.br/ieapm/sites/www.marinha.mil.br.ieapm/files/Brasao-IEAPM-small_3.png">
+                <img class='img-small' src="https://companieslogo.com/img/orig/PBR-435ea1d8.png?t=1647968022">
+            </div>
+            <div class='d-flex justify-content-around text-center pt-6'>
+                <p><strong>INPE</strong></p>
+                <p><strong>IOUSP</strong></p>
+                <p><strong>FURG</strong></p>
+                <p><strong>MMA</strong></p>
+            </div>
+            <div class='d-flex justify-content-around'>
+                <img class='img-small' src="https://oasishub.co/uploads/group/2019-08-07-153020.169343LogoINPEsemdescricaofundotransp.png">
+                <img class='img-small' src="https://www.cbe7.com/assets/img/Logos_CBE7/logo_IOUSP.png">
+                <img class='img-small' src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Logo_FURG_institucional.png/598px-Logo_FURG_institucional.png?20110516101131">
+                <img class='img-small' src="https://www.gov.br/mma/pt-br/MMAHORIZONTALMARCACOMPLETARGB.png/@@images/57615a91-d167-44c1-84ec-5a81160d2ebb.png">
+            </div>
+        </div>
+    </div>
+    <div class="image-strip text-center" style="background-image: url('<%= image_path "http://www.pnboia.org/pictures/#{@site.picture.sample}" %>')" id="fundo">
+        <div class="container reveal">
+            <div class="line"></div>
+        </div>
+    </div>
+    <div class='container container-pnboia'>
+        <h1 class='text-center title font-weight-bold p-3 pnboia-title'>HISTORICO</h1>
+        <%= markdown(@site.history) %>
+        <h1 class='text-center title font-weight-bold p-3'>PROBLEMAS</h1>
+        <%= markdown(@site.problem) %>
+    </div>
+    <div id="slider" class="slider mt-2">
+        <div class="slider-content">
+            <div class="slider-content-wrapper">
+                <% @site.other_picture.each_with_index do |picture, idx| %>
+                    <% if idx > 5 %>
+                        <% break %>
+                    <% else %>
+                        <div class="slider-content__item image-<%=idx + 1%>%"
+                            style="background-image: url('<%= image_path "http://www.pnboia.org/pictures/#{picture}" %>')">
+                        </div>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class='container container-pnboia'>
+        <h1 class='text-center title font-weight-bold p-3'>OBSERVACOES</h1>
+        <%= markdown(@site.observation) %>
+        <h1 class='text-center title font-weight-bold p-3'>DOCUMENTACAO</h1>
+    </div>
+</div>
+
+
+    <%# t.text "picture", default: [], array: true
+    t.text "quality_control_file", default: [], array: true
+    t.text "vandalism_file", default: [], array: true
+    t.text "article_file", default: [], array: true
+    t.text "pnt_file", default: [], array: true  %>

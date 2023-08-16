@@ -58,6 +58,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ast (2.4.2)
     autoprefixer-rails (10.2.5.0)
       execjs (< 2.8.0)
     bcrypt (3.1.16)
@@ -136,6 +137,9 @@ GEM
     nokogiri (1.12.4-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    parallel (1.23.0)
+    parser (3.2.2.1)
+      ast (~> 2.4.1)
     pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -179,10 +183,12 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.20.3, < 2.0)
+    rainbow (3.1.1)
     rake (13.0.6)
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redcarpet (3.6.0)
     redis (4.4.0)
     regexp_parser (2.1.1)
     responders (3.0.1)
@@ -193,6 +199,24 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rexml (3.2.5)
+    rubocop (1.51.0)
+      json (~> 2.3)
+      parallel (~> 1.10)
+      parser (>= 3.2.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.28.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.28.1)
+      parser (>= 3.2.1.0)
+    rubocop-rails (2.19.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.33.0, < 2.0)
+    ruby-progressbar (1.13.0)
     ruby_dep (1.5.0)
     rubyzip (2.3.2)
     sass (3.7.4)
@@ -243,6 +267,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
+    unicode-display_width (2.4.2)
     uri (0.12.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -274,6 +299,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  coderay
   devise
   dotenv-rails
   font-awesome-sass
@@ -288,8 +314,10 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.11)
   rails (~> 6.0.0)
+  redcarpet
   redis (~> 4.0)
   rest-client
+  rubocop-rails
   sass-rails (~> 5)
   selenium-webdriver
   simple_form

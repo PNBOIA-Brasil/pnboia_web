@@ -1,6 +1,19 @@
 <%= render 'shared/navbar' %>
 
-<h1 class="text-center font-weight-bold p-3">ADMIN</h1>
+<h1 class="admin text-center font-weight-bold p-3">ADMIN</h1>
+<h3 class='text-center p-2'>SITE</h2>
+<div class="row ml-0 mr-0 pt-3 pb-5">
+    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-right d-flex">
+            <% if @site %>
+                <%= link_to "EDITAR INFORMAÇÕES DO SITE", edit_site_path(@site), class: "btn btn-outline-danger m-1 w-100" %>
+            <% else %>
+                <%= link_to "CRIAR NOVAS INFORMAÇÕES PARA O SITE", new_site_path, class: "btn btn-success m-1 w-100" %>
+            <% end %>
+        </div>
+    </div>
+</div>
+
 <h3 class='text-center p-2'>BOIAS</h2>
 <div class="row ml-0 mr-0 pt-3 pb-5">
     <div class="col-sm-12 col-md-12 col-lg-12 text-right"> 

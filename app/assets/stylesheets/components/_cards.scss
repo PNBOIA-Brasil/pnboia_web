@@ -1,67 +1,85 @@
-.card-trip {
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-}
-
-.card-trip > img {
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
-}
-
-.card-trip h2 {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.card-trip p {
-  font-size: 12px;
-  opacity: .7;
-  margin: 0;
-}
-
-
-.card-trip .card-trip-infos {
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  position: relative;
-}
-
-.card-trip-infos .card-trip-user {
-  position: absolute;
-  right: 16px;
-  top: -20px;
-  width: 40px;
-}
-
-
+// button, input[type="submit"], input[type="reset"] {
+// 	background: none;
+// 	color: inherit;
+// 	border: none;
+// 	padding: 0;
+// 	font: inherit;
+// 	cursor: pointer;
+// 	outline: inherit;
+// }
 
 @keyframes example {
-  0%   {background-color: #008CEA;}
+  0%   {background-color: $blue;}
   25%  {background-color: #FEDC37;}
-  100% {background-color: #008CEA;}
+  100% {background-color: $blue;}
 }
 
 .card-animation{
-  background-color: #008CEA;
+  background-color: $blue;
   animation-name: example;
   animation-duration: 3s; 
 }
 
+.card-buoy {
+  overflow: hidden;
+  cursor: pointer; /* Mouse pointer on hover */
+  background: $blue;
+  box-shadow: 0 0 1rem rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  height: 2.25rem;
+  color: $white;
+  img {
+    height: 80%;
+    width: 2rem;
+    object-fit: contain;
+  }
+  p {
+    font-size: 0.875rem !important;
+    font-weight: bold;
+    margin: 0;
+  }
+  &:hover{
+    opacity: 0.7;
+  }
+}
 
-.card-product-big {
+.card-buoy-big {
   position: relative;
   overflow: hidden;
-  // height: 120px;
-  background: #008CEA;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  background: $blue;
+  box-shadow: 0 0 1rem rgba(0,0,0,0.2);
   align-items: center;
   height: 100%;
   width: 100%;
+  color: $white;
+  img {
+    height: 80%;
+    width: 2rem;
+    object-fit: contain;
+  }
+  a {
+    font-size: 100%;
+  }
+  h3 {
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  h3.title {
+    font-size: 0.95rem;
+  }
+  p {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    opacity: .7;
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+  }
+  .card-buoy-infos {
+    padding: 16px;
+  }  
 }
 
 
@@ -78,48 +96,6 @@
   opacity: 0.7;
   &:hover{
     opacity: 1.0;
-  }
-}
-.card-product-big img {
-  height: 80%;
-  width: 30px;
-  object-fit: contain;
-}
-
-.card-product-big h3 {
-  font-size: 13px;
-  font-weight: bold;
-  margin: 0;
-}
-.card-product-big h3.title {
-  font-size: 15px;
-}
-
-.card-product-big p {
-  font-size: 12px;
-  line-height: 1.4;
-  opacity: .7;
-  margin-bottom: 0;
-  margin-top: 8px;
-}
-
-.card-product-big .card-product-infos {
-  padding: 16px;
-}
-
-
-
-
-.card-product {
-  overflow: hidden;
-  cursor: pointer; /* Mouse pointer on hover */
-  background: #008CEA;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  height: 35px;
-  &:hover{
-    opacity: 0.7;
   }
 }
 
@@ -169,32 +145,31 @@
   }
   .active{
     border: 2px solid black;
-    text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+    text-shadow: 0px 0px 8px black, 1px 0px 2px $white;
     color: #0E0000;
     background-color: rgba(0,0,0,0);
   }
 }
 
 
-.white-button-small {
+.outline-button-small {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  border: 2px solid white;
-  font-weight: bold;
+  font-size: 1rem !important;
+  border: 2px solid $white !important;
+  background: rgba(0,0,0,0) !important;
+  color: $white !important;
+  font-weight: bold !important;
+  text-decoration: none;
   border-radius: 5px;
-  text-shadow: 0px 0px 8px black, 1px 0px 2px white;
+  text-shadow: 0px 0px 8px $black, 1px 0px 2px $white;
   &:hover {
-    background-color: white;
-    color: grey;
+    background-color: $white !important;
+    color: $gray !important;
     text-shadow: none;
   }
-}
-.card-product-big a {
-  color: white;
-  font-size: 100%;
 }
 
 
@@ -261,22 +236,13 @@
   padding: 16px;
 }
 
-.active10 {
-  background-color: #FEDC37;
+.active-buoy-button {
+  background-color: $yellow;
+  color: $black;
 }
 
 
 .pop-up{
   color: black;
   text-align: center !important;
-}
-
-.card-project {
-  text-align: -webkit-center;
-
-  img{
-  height: 100%;
-  width: 400px;
-  object-fit: contain;
-  }
 }

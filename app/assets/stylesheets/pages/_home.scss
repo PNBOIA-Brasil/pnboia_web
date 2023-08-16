@@ -1,3 +1,31 @@
+.white-body {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 100%;
+  background: $light-gray;
+  color: $black;
+  p{
+    font-size: 1.25rem;
+  }
+  h3{
+    font-size: 1.5rem;
+  }
+}
+
+.full-page {
+  height: 100vh;
+}
+
+
+.blue-body {
+  background: $blue;
+  color: $white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 100%;
+  .img { max-width: 100%; height: auto; }
+}
+
 body {
   max-width: 100%;
   overflow-x: hidden;
@@ -5,98 +33,60 @@ body {
   font-size:100%; 
 }
 
-.observation {
-  font-size: 17px;
-  width: max-content;
-}
-.observation1 {
-  font-size: 1.4 rem;
-}
-.gap {
-  margin-top: 40px;
-}
-.quotes {display: none;}
 
-.img { max-width: 100%; height: auto; }
-
-// landing page styling
 .front-page {
-  
   height: 100vh;
   background-size: cover;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  color: black;
-  .img { max-width: 100%; height: auto; }
-
+  color: $black;
+  font-size: 100%;
   h1 {
-    text-shadow: 1px 2px 0px white, -2px 1px 30px white;
+    text-shadow: 1px 2px 0px $white, -2px 1px 30px $white;
     font-weight: bold;
-    font-size: 100%;
+    font-size: 2.5rem;
   }
-
   p {
-    text-shadow: 2px 2px 0px white, -2px 1px 30px white;
+    text-shadow: 2px 2px 0px $white, -2px 1px 30px $white;
     font-weight: bold;
-    font-size: 100%;
+    font-size: 2.5rem;
+  }
+  .outline-button{
+    margin-right: 0.5rem;
   }
 
-  .white-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    height: 60px;
-    width: 140px;
-    border: 4px solid white;
-    font-weight: bold;
-    float:right;
-    margin-right: 10px;
-    border-radius: 5px;
-    text-shadow: 0px 0px 8px black, 1px 0px 2px white;
-    &:hover {
-      background-color: white;
-      color: grey;
-      text-shadow: none;
-    }
-  }
-
-  a {
-    color: white;
-    font-size: 100%;
-  }
 }
 
-.active-button{
-  background-color: #FEDC37 !important;
-  opacity: 0.9 !important;
-}
-.orange-button1 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  height: 60px;
-  width: 140px;
-  font-weight: bold;
-  background-color: #3FAEFD;
-  border-radius: 5px;
-  float:right;
-  -webkit-transition: background-color 0.75s, color 0.75s;
-  transition: background-color 0.75s, color 0.75s;
-}
 
-.orange-button {
+.outline-button {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  height: 60px;
-  width: 140px;
+  height: 4rem;
+  width: 9rem;
+  border: 0.25rem solid $white !important;
+  font-weight: bold;
+  color: $white !important;
+  float:right;
+  border-radius: 5px;
+  text-shadow: 0px 0px 8px $black, 1px 0px 2px $white;
+  &:hover {
+    background-color: $white;
+    color: $gray !important;
+    text-shadow: none;
+  }
+}
+
+.fill-button {
+  cursor: pointer;
+  color: $white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 9rem;
   font-weight: bold;
   background-color: #3FAEFD;
   border-radius: 5px;
@@ -104,58 +94,34 @@ body {
   -webkit-transition: background-color 0.75s, color 0.75s;
   transition: background-color 0.75s, color 0.75s;
   &:hover {
-    background-color: #FEDC37 !important;
+    background-color: $yellow !important;
     opacity: 1.0 !important;
+    color: $black !important;
   }
-}
+} 
 
-.orange-button-search {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  height: 100%;
-  width: 120px;
+.button-search {
   font-weight: bold;
-  background-color: #3FAEFD;
   border-radius: 5px;
   float:right;
+  background-color: $blue !important;
   -webkit-transition: background-color 0.75s, color 0.75s;
-  transition: background-color 0.75s, color 0.75s;
+  transition: background-color 0.2s, color 0.2s;
   &:hover {
-    background-color: #FEDC37;
+    background-color: $yellow !important;
   }
 }
 
-.projetos {
-  background-color:#F4F4F4;
-  .img { max-width: 100%; height: auto; }
-  color: black;
-  padding: 10px;
-  h2 {
-    text-align: center;
-  }
-}
-
-
-.tempo-real {
-  height: 100vh;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  width: 100%;
-  background: #008CEA;
-  color: white;
-  .img { max-width: 100%; height: auto; }
+.button-small {
+  height: 2rem !important;
 }
 
 
 .image-strip {
+  margin-top: 2rem;
   font-size: 60px;
   font-weight:400;
   /* The image used */
-  background-image: image-url("spotter_inpe.png");
-
   /* Set a specific height */
   height: 180px;
   .img { max-width: 100%; height: auto; }
@@ -169,30 +135,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-}
-
-
-.image-strip2 {
-  font-size: 60px;
-  font-weight:400;
-  /* The image used */
-  background-image: image-url("strip2.png");
-
-  /* Set a specific height */
-  height: 180px;
-  .img { max-width: 100%; height: auto; }
-
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  color: $white;
 }
 
 
@@ -203,180 +146,10 @@ body {
 }
 
 .letter-date{
-  font-size: 17px;
+  font-size: 1rem;
 }
+
 .form-search{
   display: flex;
   justify-content: center;
 }
-
-@media (max-width: 990px) {
-  /* For a screen < 960px, this CSS will be read */
-  .container {
-    h2 {
-      font-size: 1.7rem;
-    }
-    p {
-      font-size: 16px ;      
-    }
-
-    .card-project img{
-      width: 300px;
-    }
-  }
-  .card-product img {
-    width: 110px;
-  }
-  .orange-button-search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    height: 40px;
-    width: 120px;
-    font-weight: bold;
-    background-color: #3FAEFD;
-    border-radius: 5px;
-    float:right;
-    -webkit-transition: background-color 0.75s, color 0.75s;
-    transition: background-color 0.75s, color 0.75s;
-    &:hover {
-      background-color: #FEDC37;
-    }
-  }
-  .observation {
-    font-size: 1.2rem;
-  }
-
-}
-@media (max-width: 720px) {
-  /* For a screen < 720px, this CSS will be read */
-  .container {
-    h2 {
-      font-size: 1.6rem;
-    }
-    h6 {
-      font-size: 0.9rem;
-    }
-    p {
-      font-size: 13px ;      
-    }
-  
-    .card-project img{
-      width: 200px;
-    }
-  }
-  .form-search{
-    display: block;
-  }  
-  .card-product img {
-    width: 100px;
-  }
-  .orange-button-search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    height: 30px;
-    width: 80px;
-    font-weight: bold;
-    background-color: #3FAEFD;
-    border-radius: 5px;
-    float:right;
-    -webkit-transition: background-color 0.75s, color 0.75s;
-    transition: background-color 0.75s, color 0.75s;
-    &:hover {
-      background-color: #FEDC37;
-    }
-  }
-
-
-}
-
-@media (max-width: 320px) {
-  /* For a screen < 540px, this CSS will be read */
-  .container {
-    h2 {
-      font-size: 1.5rem;
-    }
-    h6 {
-      font-size: 0.8rem;
-    }
-    p {
-      font-size: 16px ;      
-    }
-    .card-project img {
-      width: 100px;
-    }
-  }
-  .form-search{
-    display: block;
-  }  
-  .card-product img{
-    width: 80px;
-  }
-  .card-product-infos{
-    padding: 0px;
-  }
-  .orange-button-search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    height: 30px;
-    width: 80px;
-    font-weight: bold;
-    background-color: #3FAEFD;
-    border-radius: 5px;
-    float:right;
-    -webkit-transition: background-color 0.75s, color 0.75s;
-    transition: background-color 0.75s, color 0.75s;
-    &:hover {
-      background-color: #FEDC37;
-    }
-  }
-
-
-}
-
-@media (min-width: 320px) { body {font-size:1.2rem;} } 
-@media (min-width: 640px) { body {font-size:1.5rem;} } 
-@media (min-width:960px) { body {font-size:1.8rem;} } 
-@media (min-width:1100px) { body {font-size:2.0rem;} } 
-
-@media (min-width: 320px) { .orange-button {
-  font-size: 12px;
-  height: 40px;
-  width: 90px;
-} } 
-@media (min-width: 640px) { .orange-button {
-  font-size: 12px;
-  height: 40px;
-  width: 90px;
-} } 
-
-@media (min-width: 960px) { .orange-button {
-  font-size: 14px;
-  height: 40px;
-  width: 90px;
-} } 
-
-
-@media (min-width:1100px) { .orange-button {
-  font-size: 18px;
-  height: 60px;
-  width: 140px;
-} } 
-
-@media (min-width: 320px) { .front-page .white-button {
-  font-size: 12px;
-  height: 40px;
-  width: 90px;
-} } 
-
-@media (min-width:1100px) {.front-page .white-button {
-  font-size: 18px;
-  height: 60px;
-  width: 140px;
-} } 
-

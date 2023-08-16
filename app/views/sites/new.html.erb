@@ -1,0 +1,17 @@
+<%= render 'shared/navbar' %>
+
+<div class="m-5">
+    <h1 class="font-weight-bold text-center p-3 h1">CRIAR NOVO SITE</h1>
+    <%= simple_form_for @site, html: { class: "results row justify-content-around"} do |f| %>
+        <div class='col-12 col-md-7 mt-5 pt-1'>
+            <%= f.input :about, label: 'Sobre', :input_html => { 'rows' => 10, 'cols' => 10 } %>
+            <%= f.input :history, label: 'Historico', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :institution, label: 'Instituicoes Participantes', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :goal, label: 'Objetivos', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :problem, label: 'Problemas', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.input :observation, label: 'Observacoes', :input_html => { 'rows' => 10, 'cols' => 10 }  %>
+            <%= f.button :submit, "Criar Site", class: "btn btn-outline-danger m-2"%>
+        </div>
+    <% end %>
+</div>
+

@@ -1,6 +1,6 @@
 class SystemsController < ApplicationController
-  before_action :set_system, only: [:update, :destroy]
- 
+  before_action :set_system, only: %i[update destroy]
+
   def create
     if current_user.admin
       @system = System.new(system_params)
@@ -28,8 +28,8 @@ class SystemsController < ApplicationController
   def destroy
     if current_user.admin
       begin
-          @system.destroy
-      rescue
+        @system.destroy
+      rescue StandardError
       end
       @systems = System.all
       @system = System.new
@@ -40,6 +40,7 @@ class SystemsController < ApplicationController
   end
 
   private
+
   def set_system
     @system = System.find(params[:id])
   end

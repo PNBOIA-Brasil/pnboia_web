@@ -11,5 +11,12 @@ Rails.application.routes.draw do
       patch :add_image_attachment
     end
   end
+  resources :sites do
+    member do
+      patch :delete_image_attachment
+      patch :add_image_attachment
+    end
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

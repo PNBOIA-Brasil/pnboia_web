@@ -1,3 +1,3 @@
 class Buoy < ApplicationRecord
-    self.primary_key = :buoy_id
+  self.primary_key = :buoy_id
 end
